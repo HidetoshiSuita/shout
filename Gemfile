@@ -28,7 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 gem 'devise'
 #deviseのインストール
-
+gem 'rails-i18n'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 #deviseの日本語化↑
