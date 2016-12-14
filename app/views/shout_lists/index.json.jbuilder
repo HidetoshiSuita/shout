@@ -1,0 +1,1 @@
+json.array! @shout_lists, partial: 'shout_lists/shout_list', as: :shout_list

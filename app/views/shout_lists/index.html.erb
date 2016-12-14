@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Shout Lists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Shout</th>
+      <th>User</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @shout_lists.each do |shout_list| %>
+      <tr>
+        <td><%= shout_list.id %></td>
+        <td><%= shout_list.shout %></td>
+        <td><%= shout_list.user_id %></td>
+        <td><%= link_to 'Show', shout_list %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Shout List', new_shout_list_path %>

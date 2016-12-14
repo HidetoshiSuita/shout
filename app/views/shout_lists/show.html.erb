@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shout:</strong>
+  <%= @shout_list.shout %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @shout_list.user_id %>
+</p>
+
+<%= link_to 'Edit', edit_shout_list_path(@shout_list) %> |
+<%= link_to 'Back', shout_lists_path %>

@@ -1,0 +1,2 @@
+class ShoutList < ApplicationRecord
+end
