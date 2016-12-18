@@ -5,5 +5,9 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def shout
+    @user = ShoutList.new
+  end
+
+  def shout_aftre
   end
 end

@@ -10,6 +10,7 @@ class ShoutListsController < ApplicationController
   # GET /shout_lists/1
   # GET /shout_lists/1.json
   def show
+    redirect_to :back#:actina => "after_log_in_prosess" :action => "chouse"
   end
 
   # GET /shout_lists/new

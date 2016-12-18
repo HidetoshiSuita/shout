@@ -2,11 +2,12 @@
 
 <h1>Shout Lists</h1>
 
-<table>
+<table border="1">
   <thead>
     <tr>
+      <th>Shout_Id</th>
       <th>Shout</th>
-      <th>User</th>
+      <th>User_Id</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= shout_list.shout %></td>
         <td><%= shout_list.user_id %></td>
         <td><%= link_to 'Show', shout_list %></td>
+        <td><%= link_to 'Destroy', shout_list ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
