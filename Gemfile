@@ -26,16 +26,13 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-<<<<<<< HEAD
+
 gem 'devise'
 #deviseのインストール
 gem 'rails-i18n'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 #deviseの日本語化↑
-=======
-gem 'devise'#←　deviseを追加させる
->>>>>>> a387064bf2cbbc7c395db7f6049cd2b21a47f9f4
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
