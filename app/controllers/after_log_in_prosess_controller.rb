@@ -12,7 +12,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def watch_shout
-      @shout = Shout_list.where(:user_id => current_user.id)
-  
+      @shout = ShoutList.where(:user_id => current_user.id)
+      
   end
 end
