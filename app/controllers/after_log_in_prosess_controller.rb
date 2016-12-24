@@ -12,7 +12,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def watch_shout
-      @shout = ShoutList.where(:user_id => current_user.id)
-      
+      my_shout = ShoutList.where(:user_id => current_user.id)
+      @shout = my_shout.sort_by{|shout_info| shout_info[:cretate_at]}.reverse!
   end
 end
