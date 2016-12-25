@@ -12,5 +12,6 @@ Rails.application.routes.draw do
 
   get 'after_log_in_prosess/watch_shout' => 'after_log_in_prosess#watch_shout'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'after_log_in_prosess/find_user' => 'after_log_in_prosess#find_user'
    root to: "home#index"
 end
