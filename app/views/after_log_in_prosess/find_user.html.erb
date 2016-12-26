@@ -1,5 +1,9 @@
-<%= search_form_for @q do |f| %>
-  <%= f.label :name_cont, "ユーザー名" %>
-  <%= f.search_field :name_cont %>
-  <%= f.submit %>
-<% end %>
+
+<%=search_form_for @q, url: after_log_in_prosess_find_user_path do |f|%>
+  <%= f.label :name_cont, "名前"%>
+  <%= f.text_field :name_cont%>
+  <%= f.submit "Search" %>
+<%end%>
+<%@users.each do |user_hash|%>
+  <p><%=　ser_hash[:name]></p>
+<%end%>
