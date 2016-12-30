@@ -26,6 +26,22 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
+group :development do
+  # 高機能コンソール
+  gem 'pry-rails'
+
+  # デバッガー
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
+
+  # pryの入出力に色付け
+  gem 'pry-coolline'
+  gem 'awesome_print'
+
+  # PryでのSQLの結果を綺麗に表示
+  gem 'hirb'
+  gem 'hirb-unicode'
+end
 
 gem 'devise'
 #deviseのインストール
