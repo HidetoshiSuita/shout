@@ -4,6 +4,8 @@
   <p>叫び：<%=@un_resp[:shout]%></p>
 </div>
 
+
+
 <div class = "resp_field">
   <%=form_for @resp_info ,:url => {:controller => 'after_log_in_prosess' ,:action => 'register_resp' } do |f| %>
   <p><%=f.text_area :shout%></p>

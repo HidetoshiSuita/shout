@@ -19,8 +19,5 @@ Rails.application.routes.draw do
 
   get 'after_log_in_prosess/resp_shout/:id' => 'after_log_in_prosess#resp_shout'
 
-  get 'after_log_in_prosess/resp_shout' => 'after_log_in_prosess#register_resp'
-
-
-
+  post 'after_log_in_prosess/resp_shout' => 'after_log_in_prosess#register_resp'
 end
