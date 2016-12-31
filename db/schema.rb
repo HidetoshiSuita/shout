@@ -10,10 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161223014803) do
+ActiveRecord::Schema.define(version: 20161231000003) do
 
   create_table "shout_lists", force: :cascade do |t|
-    t.string   "shout"
+    t.text     "shout"
     t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
