@@ -22,4 +22,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+・get_unresp_shout(shout_id)
+　パラメーターでshout_idをもらって、返信対象となるshoutを取得
 # shout

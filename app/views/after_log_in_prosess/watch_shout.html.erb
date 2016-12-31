@@ -2,5 +2,6 @@
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
   <p>名前：<%=find_user_name shout_list[:user_id]%></p>
   <p>叫び：<%=shout_list[:shout]%></p>
+  <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
 </div>
 <%end%>

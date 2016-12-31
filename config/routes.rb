@@ -2,6 +2,9 @@ Rails.application.routes.draw do
 
   resources :shout_lists
   devise_for :users
+
+  root to: "home#index"
+
   get 'home/index'
 
   get 'home/show'
@@ -13,5 +16,11 @@ Rails.application.routes.draw do
   get 'after_log_in_prosess/watch_shout' => 'after_log_in_prosess#watch_shout'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get 'after_log_in_prosess/find_user' => 'after_log_in_prosess#find_user'
-   root to: "home#index"
+
+  get 'after_log_in_prosess/resp_shout/:id' => 'after_log_in_prosess#resp_shout'
+
+  get 'after_log_in_prosess/resp_shout' => 'after_log_in_prosess#register_resp'
+
+
+
 end

@@ -21,7 +21,17 @@ class AfterLogInProsessController < ApplicationController
   end
 
  def find_user_result
+ end
 
+ def resp_shout
+   @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
+   @resp_info = ShoutList.new
+ end
+
+ def register_resp
+  p "ppppppppppppppppp"
+  p  @resp_info[:shout]
+  p "ppppppppppppppppp"
  end
 
 end
