@@ -29,9 +29,11 @@ class AfterLogInProsessController < ApplicationController
  end
 
  def register_resp
-   p "ppppppppppppppppp"
-  p   @shout = ShoutList.new(params[:resp_info])
-   p "ppppppppppppppppp"
+    @resp=ShoutList.new(resp_info_params)
  end
+private
 
+def resp_info_params
+  params.require(:shout_list).permit(:shout, :user_id)
+end
 end
