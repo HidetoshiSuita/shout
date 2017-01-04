@@ -1,7 +1,29 @@
+<%used_shout=[]%>
 <%@shout.each do |shout_list|%>
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+  <%if shout_list[:resp_shout]%>
+    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+      <p>名前：<%=find_user_name shout_list[:user_id]%></p>
+      <p>叫び：<%=shout_list[:shout]%></p>
+    </div>
+
+  <div>
+    <% result=get_resp shout_list[:resp_shout]%>
+    <p>名前：<%=find_user_name result[:user_id]%></p>
+    <p>返信：<%=result[:shout]%></p>
+    <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
+    <%used_shout << result[:id]%>
+  </div>
+
+  <%elsif used_shout.include?(shout_list[:id])%>
+   <%next%>
+
+  <%else%>
+  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
   <p>名前：<%=find_user_name shout_list[:user_id]%></p>
   <p>叫び：<%=shout_list[:shout]%></p>
+  <p><%=shout_list[:resp_shout]%></p>
   <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
 </div>
+<%end%>
+
 <%end%>

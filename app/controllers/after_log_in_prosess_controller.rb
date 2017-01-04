@@ -29,11 +29,16 @@ class AfterLogInProsessController < ApplicationController
  end
 
  def register_resp
-    @resp=ShoutList.new(resp_info_params)
+    resp=ShoutList.new(resp_info_params)
+    #:shout=返信内容、:user_id=返信者のuser_id, :id=返信対象となるshoutのid
+    id=ShoutList.make_resp(resp)
+    ShoutList.update_resp(resp,id)
+    redirect_to :action => "watch_shout"
  end
+
 private
 
 def resp_info_params
-  params.require(:shout_list).permit(:shout, :user_id)
+  params.require(:shout_list).permit(:shout, :user_id, :id)
 end
 end
