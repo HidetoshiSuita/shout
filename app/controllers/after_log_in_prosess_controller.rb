@@ -29,16 +29,25 @@ class AfterLogInProsessController < ApplicationController
  end
 
  def register_resp
-    resp=ShoutList.new(resp_info_params)
+    resp_shout = ShoutList.new(resp)
     #:shout=返信内容、:user_id=返信者のuser_id, :id=返信対象となるshoutのid
-    id=ShoutList.make_resp(resp)
-    ShoutList.update_resp(resp,id)
+    #id = ShoutList.make_resp(resp)
+    #ShoutList.update_resp(resp,id)
+    resp_shout=ShoutList.new(
+                     :shout => resp[:shout], :user_id => resp[:user_id],
+                      :resp_shout => resp[:id]
+                     )
+    resp_shout.save
     redirect_to :action => "watch_shout"
  end
 
+ def watch_resp_shout
+   @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
+   @resp = ShoutList.where(:resp_shout => params[:id].to_i)
+ end
 private
 
-def resp_info_params
+def resp
   params.require(:shout_list).permit(:shout, :user_id, :id)
 end
 end
