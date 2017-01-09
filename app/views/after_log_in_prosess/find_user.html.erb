@@ -1,10 +1,6 @@
 
-<%=search_form_for @q, url: after_log_in_prosess_find_user_path do |f|%>
+<%=search_form_for @info, url: =>{:action => "find_user_result"} do |f|%>
   <%= f.label :name_cont, "名前"%>
   <%= f.text_field :name_cont%>
   <%= f.submit "Search" %>
-<%end%>
-<%@users.each do |user_hash|%>
-  <p><%= link_to user_hash[:name], :controller => "after_log_in_prosess", :action => "find_user"%></p>
-
 <%end%>

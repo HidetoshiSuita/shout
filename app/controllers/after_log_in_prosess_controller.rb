@@ -16,23 +16,26 @@ class AfterLogInProsessController < ApplicationController
  end
 
   def find_user
-    @q = User.search(params[:q])
-    @users = @q.result(distinct: true)
+    @info = User.search(params[:info])
   end
 
  def find_user_result
+   @q = User.search(params[:info])
+   @users = @q.result(distinct: true)
  end
 
  def resp_shout
+   p 'pppppppppppppppp'
+    p params[:id].to_i
+    p 'pppppppppppppppp'
    @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
    @resp_info = ShoutList.new
+
  end
 
  def register_resp
     resp_shout = ShoutList.new(resp)
     #:shout=返信内容、:user_id=返信者のuser_id, :id=返信対象となるshoutのid
-    #id = ShoutList.make_resp(resp)
-    #ShoutList.update_resp(resp,id)
     resp_shout=ShoutList.new(
                      :shout => resp[:shout], :user_id => resp[:user_id],
                       :resp_shout => resp[:id]
@@ -49,5 +52,9 @@ private
 
 def resp
   params.require(:shout_list).permit(:shout, :user_id, :id)
+end
+
+def check_find_user_param
+
 end
 end

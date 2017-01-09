@@ -26,4 +26,6 @@ Rails.application.routes.draw do
   get 'after_log_in_prosess/watch_resp_shout/:id' => 'after_log_in_prosess#watch_resp_shout'
 
   get 'after_log_in_prosess/watch_resp_shout/resp_shout/:id' => 'after_log_in_prosess#resp_shout'
+
+  
 end
