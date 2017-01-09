@@ -1,0 +1,11 @@
+<h5>ユーザー名：<%=@user_info[:name]%></h5>
+
+<h5>Shout:<%=@user_shout.size%>回</h5>
+
+<%@user_shout.each do |shout|%>
+  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+    <p>名前：<%=find_user_name shout[:user_id]%></p>
+    <p>叫び：<%= shout[:shout]%></p>
+    <%=link_to "返信する" ,"resp_shout/#{shout[:id]}"%>
+  </div>
+<%end%>

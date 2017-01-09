@@ -16,12 +16,19 @@ class AfterLogInProsessController < ApplicationController
  end
 
   def find_user
-    @q = User.search(params[:q])
-    @users = @q.result(distinct: true)
+    @q = User.search
   end
 
  def find_user_result
+   @q = User.search(params[:q])
+   @users = @q.result(distinct: true)
  end
+
+ def find_user_detail
+   @user_info = User.find_by(:id => params[:id])
+   @user_shout = ShoutList.where(:user_id =>params[:id])
+ end
+
 
  def resp_shout
    @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)

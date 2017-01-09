@@ -17,6 +17,8 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   get 'after_log_in_prosess/find_user' => 'after_log_in_prosess#find_user'
 
+  get 'after_log_in_prosess/find_user_result' => 'after_log_in_prosess#find_user_result'
+
   get 'after_log_in_prosess/resp_shout/:id' => 'after_log_in_prosess#resp_shout'
 
   post 'after_log_in_prosess/resp_shout' => 'after_log_in_prosess#register_resp'
@@ -26,4 +28,6 @@ Rails.application.routes.draw do
   get 'after_log_in_prosess/watch_resp_shout/:id' => 'after_log_in_prosess#watch_resp_shout'
 
   get 'after_log_in_prosess/watch_resp_shout/resp_shout/:id' => 'after_log_in_prosess#resp_shout'
+
+  get 'after_log_in_prosess/find_user_detail/:id' => 'after_log_in_prosess#find_user_detail'
 end
