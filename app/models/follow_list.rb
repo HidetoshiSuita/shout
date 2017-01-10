@@ -1,0 +1,2 @@
+class FollowList < ApplicationRecord
+end

@@ -1,6 +1,6 @@
 
-<%=search_form_for @info, url: =>{:action => "find_user_result"} do |f|%>
-  <%= f.label :name_cont, "名前"%>
+<%=search_form_for @q, url: after_log_in_prosess_find_user_result_path do |f|%>
+  <%= f.label :name_cont, 'ユーザー名'%>
   <%= f.text_field :name_cont%>
   <%= f.submit "Search" %>
 <%end%>

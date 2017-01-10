@@ -1,0 +1,1 @@
+json.partial! "follow_lists/follow_list", follow_list: @follow_list

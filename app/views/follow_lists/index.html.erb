@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Follow Lists</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Follow</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @follow_lists.each do |follow_list| %>
+      <tr>
+        <td><%= follow_list.user_id %></td>
+        <td><%= follow_list.follow_id %></td>
+        <td><%= link_to 'Show', follow_list %></td>
+        <td><%= link_to 'Edit', edit_follow_list_path(follow_list) %></td>
+        <td><%= link_to 'Destroy', follow_list, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Follow List', new_follow_list_path %>
