@@ -1,0 +1,1 @@
+json.partial! "like_lists/like_list", like_list: @like_list

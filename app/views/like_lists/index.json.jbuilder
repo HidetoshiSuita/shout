@@ -1,0 +1,1 @@
+json.array! @like_lists, partial: 'like_lists/like_list', as: :like_list
