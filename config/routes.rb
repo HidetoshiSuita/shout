@@ -33,4 +33,7 @@ Rails.application.routes.draw do
   get 'after_log_in_prosess/find_user_detail/:id' => 'after_log_in_prosess#find_user_detail'
 
   get 'after_log_in_prosess/find_user_detail/follow_user/:user_id/:follow_id' => 'after_log_in_prosess#follow_user'
+
+  post 'after_log_in_prosess/find_user_detail/delete_follow_list/:id' => 'after_log_in_prosess#delete_follow_list'
+
 end

@@ -59,6 +59,7 @@ class FollowListsController < ApplicationController
       format.html { redirect_to follow_lists_url, notice: 'Follow list was successfully destroyed.' }
       format.json { head :no_content }
     end
+    redirect_to :back
   end
 
   private

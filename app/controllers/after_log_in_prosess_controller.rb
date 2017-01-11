@@ -27,6 +27,10 @@ class AfterLogInProsessController < ApplicationController
  def find_user_detail
    @user_info = User.find_by(:id => params[:id])
    @user_shout = ShoutList.where(:user_id =>params[:id])
+   follow_info_check = User.find_by(:id => current_user.id)
+   @follow_info_result = follow_info_check.follow_lists.find_by(
+     :user_id => current_user.id , :follow_id => params[:id].to_i
+                                                                )
  end
 
 
@@ -58,8 +62,15 @@ class AfterLogInProsessController < ApplicationController
   else
     flash[:follow_user_result] = 'フォローできませんでした。もう一度お願いします。'
   end
-  redirect_to :back
+   redirect_to :back 
  end
+
+ def delete_follow_list
+   follow_list = FollowList.find_by(:id => params[:id])
+   follow_list.destroy
+   redirect_to :back
+ end
+
 private
 
 def resp
