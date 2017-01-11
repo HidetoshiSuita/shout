@@ -52,11 +52,13 @@ class AfterLogInProsessController < ApplicationController
  end
 
  def follow_user
-
-   p params[:user_id]
-   p params[:follow_id]
-
-
+   user = User.find_by(:id => params[:user_id].to_i)
+  if user.follow_lists.create(:user_id => params[:user_id].to_i, :follow_id => params[:follow_id].to_i)
+    flash[:follow_user_result] = 'フォローしました。'
+  else
+    flash[:follow_user_result] = 'フォローできませんでした。もう一度お願いします。'
+  end
+  redirect_to :back
  end
 private
 
