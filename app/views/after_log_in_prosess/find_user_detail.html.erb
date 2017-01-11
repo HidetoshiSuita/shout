@@ -1,6 +1,9 @@
 <h5>ユーザー名：<%=@user_info[:name]%></h5>
 
 <h5>Shout:<%=@user_shout.size%>回</h5>
+<%if current_user.id !=@user_info[:id]%>
+  <%=link_to "フォローする", "follow_user/#{current_user.id}/#{@user_info[:id]}"%>
+<%end%>
 
 <%@user_shout.each do |shout|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">

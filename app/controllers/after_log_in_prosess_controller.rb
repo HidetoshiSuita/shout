@@ -31,12 +31,8 @@ class AfterLogInProsessController < ApplicationController
 
 
  def resp_shout
-   p 'pppppppppppppppp'
-    p params[:id].to_i
-    p 'pppppppppppppppp'
    @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
    @resp_info = ShoutList.new
-
  end
 
  def register_resp
@@ -54,13 +50,18 @@ class AfterLogInProsessController < ApplicationController
    @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
    @resp = ShoutList.where(:resp_shout => params[:id].to_i)
  end
+
+ def follow_user
+
+   p params[:user_id]
+   p params[:follow_id]
+
+
+ end
 private
 
 def resp
   params.require(:shout_list).permit(:shout, :user_id, :id)
 end
 
-def check_find_user_param
-
-end
 end

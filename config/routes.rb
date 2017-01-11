@@ -31,4 +31,6 @@ Rails.application.routes.draw do
   get 'after_log_in_prosess/watch_resp_shout/resp_shout/:id' => 'after_log_in_prosess#resp_shout'
 
   get 'after_log_in_prosess/find_user_detail/:id' => 'after_log_in_prosess#find_user_detail'
+
+  get 'after_log_in_prosess/find_user_detail/follow_user/:user_id/:follow_id' => 'after_log_in_prosess#follow_user'
 end
