@@ -14,7 +14,7 @@
   <tbody>
     <% @like_lists.each do |like_list| %>
       <tr>
-        <td><%= like_list.shout_id %></td>
+        <td><%= like_list.shout_list_id %></td>
         <td><%= like_list.user_id %></td>
         <td><%= link_to 'Show', like_list %></td>
         <td><%= link_to 'Edit', edit_like_list_path(like_list) %></td>

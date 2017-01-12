@@ -73,6 +73,22 @@ class AfterLogInProsessController < ApplicationController
    redirect_to :back
  end
 
+ def make_like
+   shout = ShoutList.find_by(:id => params[:shout_id].to_i)
+   if shout.like_lists.create(:shout_list_id => shout[:id], :user_id => params[:user_id].to_i)
+     flash[:make_like_result] = 'イイネしました。'
+   else
+     flash[:make_like_result] = 'イイネできませんでした'
+   end
+   redirect_to :back
+ end
+
+ def destroy_like_list
+   like_list=LikeList.find_by(:user_id => params[:user_id].to_s, :shout_list_id => params[:shout_id].to_s )
+   like_list.destroy
+   redirect_to :back
+ end
+
 private
 
 def resp

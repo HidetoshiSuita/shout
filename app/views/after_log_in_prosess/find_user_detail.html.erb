@@ -16,5 +16,10 @@
     <p>名前：<%=find_user_name shout[:user_id]%></p>
     <p>叫び：<%= shout[:shout]%></p>
     <%=link_to "返信する" ,"resp_shout/#{shout[:id]}"%>
+    <%if LikeList.find_by(:shout_list_id => shout[:id], :user_id => current_user.id) == true%>
+      <%=button_to "イイネ解除", "destroy_like_list/#{current_user.id}/#{shout[:id]}"%>
+    <%else%>
+      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout[:id]}"%>
+    <%end%>
   </div>
 <%end%>

@@ -7,5 +7,11 @@
         <p><%=link_to "返信を見る", "watch_resp_shout/#{shout_list[:id]}" %></p>
       <%end%>
     <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
+    <p><%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイね</p>
+    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
+      <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%>
+    <%else%>
+      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
+    <%end%>
   </div>
 <%end%>
