@@ -22,14 +22,14 @@ class ShoutList < ApplicationRecord
   def self.update_resp(resp_info,resp_shout_id)
     update_info=ShoutList.find_by(:id => resp_info[:id])
     update_info.resp_shout=resp_shout_id
-#     if update_info.save
-#        flash[:resp_result] = "返信を実行しました。"
-#     else
-#       flash[:resp_result] = "返信が実行されませんでした。もう一度お願いします。"
-#     end
-# 　　flash[:resp_result]
   end
-  # def get_shout_to_watch(user_id)#,user_follow_info)#フォローユーザーのidからレコードを取得するメソッドを作りたい
-  #   #@shout_list=#ここに入れてviewに渡す
-  #   @shout = Shout_list.where(:user_id => user_id)
+
+  def self.get_follow_shout(user_id)
+    follow_info = FollowList.where(:user_id => user_id)
+    follow_shout = []
+    follow_info.each do |info|
+      follow_shout << ShoutList.where(:user_id => info[:follow_id])
+    end
+    follow_shout
+  end
 end

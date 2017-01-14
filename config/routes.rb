@@ -41,4 +41,8 @@ Rails.application.routes.draw do
 
   post '/after_log_in_prosess/destroy_like_list/:user_id/:shout_id' => 'after_log_in_prosess#destroy_like_list'
 
+  post'/after_log_in_prosess/find_user_detail/make_like/:user_id/:shout_id' => 'after_log_in_prosess#make_like'
+
+  get "/after_log_in_prosess/watch_my_info/:id" => 'after_log_in_prosess#watch_my_info'
+
 end

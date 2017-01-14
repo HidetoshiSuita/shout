@@ -1,17 +1,11 @@
-<h5>ユーザー名：<%=@user_info[:name]%></h5>
-<h4><%=flash[:follow_user_result]%></h4>
-<h5>Shout:<%=@user_shout.size%>回</h5>
-<h5>フォロー<%=@folow.size%></h5>
-<h5>フォロワー<%=@follower.size%></h5>
-<%if @follow_info_result !=nil%>
-  <p>フォローしています</p>
-  <%=button_to 'フォロー解除', "delete_follow_list/#{@follow_info_result[:id]}"%>
-<%elsif current_user.id !=@user_info[:id]%>
-  <%=link_to "フォローする", "follow_user/#{current_user.id}/#{@user_info[:id]}"%>
-<%else%>
-<%end%>
+<h5>名前:<%=@user[:name]%></h5>
 
-<%@user_shout.each do |shout|%>
+<h5><%=@follow.size%>follow</h5>
+
+<h5><%=@follower.size%>follower</h5>
+
+<h5><%=@shout.size%>shout</h5>
+<%@shout.each do |shout|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
     <p>名前：<%=find_user_name shout[:user_id]%></p>
     <p>叫び：<%= shout[:shout]%></p>

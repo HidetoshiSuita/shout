@@ -13,6 +13,14 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
       @shout = ShoutList.where(:user_id => current_user.id).reverse
+
+    #   follow_info = FollowList.where(:users_id => current_user.id)
+    #   @follow_shout
+    #   follow_info.each do |info|
+    #     @follow_shout << ShoutList.where(:users_id => info[:follow_id])
+    #   end
+    #  @shout << @follow_shout
+    #   @shout.sort_by {|info| info[:created_at]}.reverse!
  end
 
   def find_user
@@ -87,6 +95,13 @@ class AfterLogInProsessController < ApplicationController
    like_list=LikeList.find_by(:user_id => params[:user_id].to_s, :shout_list_id => params[:shout_id].to_s )
    like_list.destroy
    redirect_to :back
+ end
+
+ def watch_my_info
+    @user = User.find_by(:id => params[:id])
+    @shout = ShoutList.where(:user_id => params[:id])
+    @follow = FollowList.where(:user_id => params[:id])
+    @follower = FollowList.where(:follow_id => params[:id])
  end
 
 private
