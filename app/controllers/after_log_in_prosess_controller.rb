@@ -13,6 +13,17 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
       @shout = ShoutList.where(:user_id => current_user.id).reverse
+      follow_user = FollowList.where(:user_id => current_user.id)
+      @follows_shout = follow_user.each do |info|
+                    ShoutList.where(:user_id => info[:follow_id])
+                    end
+      p "++++++++++++++++++++"
+      pp @follows_shout
+      p "++++++++++++++++++++"
+
+      if @follows_shout
+        @follows_shout.sort_by{|info|info.created_at}.reverse
+      end
 
     #   follow_info = FollowList.where(:users_id => current_user.id)
     #   @follow_shout
@@ -97,11 +108,11 @@ class AfterLogInProsessController < ApplicationController
    redirect_to :back
  end
 
- def watch_my_info
-    @user = User.find_by(:id => params[:id])
-    @shout = ShoutList.where(:user_id => params[:id])
-    @follow = FollowList.where(:user_id => params[:id])
-    @follower = FollowList.where(:follow_id => params[:id])
+ def wathch_my_info
+    @user = User.find_by(:id => user_id)
+    @shout = ShoutList.where(:user_id => user_id)
+    @follow = FollowList.where(:user_id => user_id)
+    @follower = FollowList.where(:follow_id => user_id)
  end
 
 private
@@ -110,4 +121,7 @@ def resp
   params.require(:shout_list).permit(:shout, :user_id, :id)
 end
 
+  def user_id
+  params.require(:id).permit(:user_id, :id, :follow_id)
+  end
 end
