@@ -1,4 +1,4 @@
-<h5>名前:<%=@user[:name]%></h5>
+<h5>名前:<%@user.name%></h5>
 
 <h5><%=link_to "#{@follow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%></h5>
 
