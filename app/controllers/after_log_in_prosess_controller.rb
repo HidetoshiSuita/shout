@@ -97,17 +97,27 @@ class AfterLogInProsessController < ApplicationController
    redirect_to :back
  end
 
- def watch_my_info
+  def watch_my_info
     @user = User.find_by(:id => params[:id])
     @shout = ShoutList.where(:user_id => params[:id])
     @follow = FollowList.where(:user_id => params[:id])
     @follower = FollowList.where(:follow_id => params[:id])
- end
+  end
 
+  def watch_follow_user
+    @follow_user_id = FollowList.where(:user_id => params[:id])
+  end
+
+  def watch_follower
+    @follower_id = FollowList.where(:user_id => params[:id])
+  end
+
+  def update_my_info
+    @user_info = User.find_by(:id => params[:id])
+  end
 private
 
 def resp
   params.require(:shout_list).permit(:shout, :user_id, :id)
 end
-
 end

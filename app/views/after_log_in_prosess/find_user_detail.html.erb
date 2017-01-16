@@ -1,8 +1,10 @@
 <h5>ユーザー名：<%=@user_info[:name]%></h5>
 <h4><%=flash[:follow_user_result]%></h4>
 <h5>Shout:<%=@user_shout.size%>回</h5>
-<h5>フォロー<%=@folow.size%></h5>
-<h5>フォロワー<%=@follower.size%></h5>
+
+<h5><%=link_to "#{@folow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%></h5>
+
+<h5><%=link_to "#{@follower.size}follower", :controller => "after_log_in_prosess", :action => "watch_follower", :id => current_user.id%></h5>
 <%if @follow_info_result !=nil%>
   <p>フォローしています</p>
   <%=button_to 'フォロー解除', "delete_follow_list/#{@follow_info_result[:id]}"%>

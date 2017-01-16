@@ -1,6 +1,5 @@
-<%= form_for (@user) do |f| %>
+<% form_for (@user) do |f| %>
   <%= f.text_area :shout %>
   <%= f.hidden_field :user_id, :value => current_user.id%>
   <%=f.submit "叫ぶ" %>
-  
 <% end %>

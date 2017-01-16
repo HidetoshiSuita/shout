@@ -1,0 +1,4 @@
+<% @follow_user_id.each do |info|%>
+  <%result = User.find_by(:id => info[:follow_id])%>
+  <%=link_to result[:name], :controller => 'after_log_in_prosess', :action => 'find_user_detail', :id => result[:id] %>
+<%end%>
