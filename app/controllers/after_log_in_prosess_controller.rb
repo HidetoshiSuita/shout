@@ -125,17 +125,33 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_my_info
+    @info = User.new
     @user_info = User.find_by(:id => params[:id])
   end
-private
 
-def resp
-  params.require(:shout_list).permit(:shout, :user_id, :id)
-end
+  def action_update_my_info
+    info=User.new(update_my_info_params)
+    user = User.find_by(:id =>info[:id])
+    if user.update(name:info[:name],introduction:info[:introduction])
+      flash[:update_my_info] = '変更しました。反映まで時間がかかる場合があります'
+    else
+      flash[:update_my_info] ='反映できませんでいした。もう一度お願いします。'
+    end
+    redirect_to :action => "watch_my_info", :id => info[:id]
+  end
+  private
+
+  def resp
+    params.require(:shout_list).permit(:shout, :user_id, :id)
+  end
 
 
   def user_id
-  params.require(:id).permit(:user_id, :id, :follow_id)
+    params.require(:id).permit(:user_id, :id, :follow_id)
+  end
+
+  def update_my_info_params
+    params.require(:user).permit(:name, :id, :introduction)
   end
 
 end

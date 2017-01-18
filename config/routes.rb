@@ -49,6 +49,7 @@ Rails.application.routes.draw do
 
   get '/after_log_in_prosess/watch_follower/:id' => 'after_log_in_prosess#watch_follower'
 
-  get '/after_log_in_prosess/update_my_info/:id' => 'fter_log_in_prosess#update_my_info'
+  get '/after_log_in_prosess/update_my_info/:id' => 'after_log_in_prosess#update_my_info'
 
+  post '/after_log_in_prosess/action_update_my_info' => 'after_log_in_prosess#action_update_my_info'
 end
