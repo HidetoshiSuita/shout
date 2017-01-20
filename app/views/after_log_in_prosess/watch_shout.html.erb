@@ -1,36 +1,36 @@
 <%=link_to "戻る", :action => "chose"%>
+<h5><%=flash[:update_shut_result]%></h5>
 
 <%@shout.each do |shout_list|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+
+    <%resp_user=ShoutList.find_by(:id => shout_list[:resp_shout])%>
+    <%if  resp_user%>
+      <%result=User.find_by(:id => resp_user[:user_id])%>
+      <%="#{result[:name]}さんへの返信"%>
+    <%end%>
+
     <p>名前：<%=find_user_name shout_list[:user_id]%></p>
-    <p>叫び：<%=shout_list[:shout]%></p>
+    <p>叫び：<%=simple_format(shout_list[:shout])%></p>
+
       <%if how_many_resp=ShoutList.find_by(:resp_shout => shout_list[:id]) %>
         <p><%=link_to "返信を見る", "watch_resp_shout/#{shout_list[:id]}" %></p>
       <%end%>
+
     <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
+
     <p><%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイね</p>
+
     <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
+    
       <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%>
     <%else%>
       <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
     <%end%>
-  </div>
-<%end%>
 
-
-<%@follows_shout.each do |shout_list|%>
-  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #ff0000; border-radius: 10px;">
-    <p>名前：<%=find_user_name shout_list[:user_id]%></p>
-    <p>叫び：<%=shout_list[:shout]%></p>
-      <%if how_many_resp=ShoutList.find_by(:resp_shout => shout_list[:id]) %>
-        <p><%=link_to "返信を見る", "watch_resp_shout/#{shout_list[:id]}" %></p>
-      <%end%>
-    <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
-    <p><%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイね</p>
-    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
-      <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%>
-    <%else%>
-      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
+    <%if current_user.id ==  shout_list[:user_id]%>
+      <%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
     <%end%>
+
   </div>
 <%end%>

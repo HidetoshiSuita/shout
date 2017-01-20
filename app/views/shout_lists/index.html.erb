@@ -8,6 +8,7 @@
       <th>Shout_Id</th>
       <th>Shout</th>
       <th>User_Id</th>
+      <th>resp_shout</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,6 +19,7 @@
         <td><%= shout_list.id %></td>
         <td><%= shout_list.shout %></td>
         <td><%= shout_list.user_id %></td>
+        <td><%= shout_list.resp_shout %></td>
         <td><%= link_to 'Show', shout_list %></td>
         <td><%= link_to 'Destroy', shout_list ,method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

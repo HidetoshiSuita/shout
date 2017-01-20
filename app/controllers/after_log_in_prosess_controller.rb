@@ -13,25 +13,25 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
       @shout = ShoutList.where(:user_id => current_user.id).reverse
-      follow_user = FollowList.where(:user_id => current_user.id)
-      @follows_shout = follow_user.each do |info|
-                    ShoutList.where(:user_id => info[:follow_id])
-                    end
-      p "++++++++++++++++++++"
-      pp @follows_shout
-      p "++++++++++++++++++++"
-
-      if @follows_shout
-        @follows_shout.sort_by{|info|info.created_at}.reverse
-      end
-
-    #   follow_info = FollowList.where(:users_id => current_user.id)
-    #   @follow_shout
-    #   follow_info.each do |info|
-    #     @follow_shout << ShoutList.where(:users_id => info[:follow_id])
-    #   end
-    #  @shout << @follow_shout
-    #   @shout.sort_by {|info| info[:created_at]}.reverse!
+      # follow_user = FollowList.where(:user_id => current_user.id)
+      # @follows_shout = follow_user.each do |info|
+      #               ShoutList.where(:user_id => info[:follow_id])
+      #               end
+      # p "++++++++++++++++++++"
+      # pp @follows_shout
+      # p "++++++++++++++++++++"
+      #
+      # if @follows_shout
+      #   @follows_shout.sort_by{|info|info.created_at}.reverse
+      # end
+      #
+      #  follow_info = FollowList.where(:users_id => current_user.id)
+      #  @follow_shout=ShoutList.new
+      #  follow_info.each do |info|
+      #    @follow_shout << ShoutList.where(:users_id => info[:follow_id])
+      #  end
+      # @shout << @follow_shout
+      # @shout.sort_by {|info| info[:created_at]}.reverse!
  end
 
   def find_user
@@ -108,7 +108,6 @@ class AfterLogInProsessController < ApplicationController
    redirect_to :back
  end
 
-
   def watch_my_info
     @user = User.find_by(:id => params[:id])
     @shout = ShoutList.where(:user_id => params[:id])
@@ -139,19 +138,37 @@ class AfterLogInProsessController < ApplicationController
     end
     redirect_to :action => "watch_my_info", :id => info[:id]
   end
+
+  def remake_shout
+    @shout=ShoutList.find_by(:id => params[:id])
+    @result = ShoutList.new
+  end
+
+  def update_shout
+   shout=ShoutList.new(update_shout_params)
+   info=ShoutList.find_by(:id =>shout[:id] )
+   if info.update(:shout => shout[:shout])
+     flash[:update_shut_result] = '更新しました'
+   else
+     flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'
+   end
+   redirect_to :action => "watch_shout"
+  end
   private
 
   def resp
     params.require(:shout_list).permit(:shout, :user_id, :id)
   end
 
-
   def user_id
     params.require(:id).permit(:user_id, :id, :follow_id)
   end
 
   def update_my_info_params
-    params.require(:user).permit(:name, :id, :introduction)
+    params.require(:user).permit(:id, :shout)
   end
 
+  def update_shout_params
+    params.require(:shout_list).permit(:shout, :id)
+  end
 end

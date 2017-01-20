@@ -1,0 +1,6 @@
+<%=form_for @result, :url => {:controller => 'after_log_in_prosess' ,:action => 'update_shout'} do |f|%>
+  <%=f.label '変更してください'%>
+  <%=f.text_area :shout ,value:@shout[:shout]%>
+  <%=f.hidden_field :id, value:@shout[:id]%>
+  <%=f.submit '更新する'%>
+<%end%>
