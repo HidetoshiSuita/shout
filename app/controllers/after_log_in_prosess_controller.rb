@@ -64,10 +64,14 @@ class AfterLogInProsessController < ApplicationController
     resp_shout = ShoutList.new(resp)
     #:shout=返信内容、:user_id=返信者のuser_id, :id=返信対象となるshoutのid
     resp_shout=ShoutList.new(
-                     :shout => resp[:shout], :user_id => resp[:user_id],
-                      :resp_shout => resp[:id]
-                     )
-    resp_shout.save
+      :shout => resp[:shout], :user_id => resp[:user_id],:resp_shout => resp[:id]
+                            )
+
+    if resp_shout.save
+      PostMailer.resp_email(
+        User.find_by(:id =>current_user.id),User.find_by(:id => resp[:user_id])).deliver
+    end
+
     redirect_to :action => "watch_shout"
  end
 
@@ -153,6 +157,16 @@ class AfterLogInProsessController < ApplicationController
      flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'
    end
    redirect_to :action => "watch_shout"
+  end
+
+  def destoroy_shout
+    shout=ShoutList.find_by(:id => params[:id])
+    if shout.destroy
+      flash[:destroy_shout_result] = '削除しました。'
+    else
+      flash[:destroy_shout_result] = '削除できませんでした。もう一度お願いします。'
+    end
+    redirect_to :action => "watch_shout"
   end
   private
 

@@ -1,5 +1,6 @@
 <%=link_to "戻る", :action => "chose"%>
 <h5><%=flash[:update_shut_result]%></h5>
+<h5><%=flash[:destroy_shout_result]%></h5>
 
 <%@shout.each do |shout_list|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
@@ -22,7 +23,7 @@
     <p><%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイね</p>
 
     <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
-    
+
       <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%>
     <%else%>
       <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>

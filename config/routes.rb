@@ -57,5 +57,7 @@ Rails.application.routes.draw do
 
   post '/after_log_in_prosess/remake_shout' => 'after_log_in_prosess#update_shout'
 
+  get '/after_log_in_prosess/remake_shout/destoroy_shout/:id' => 'after_log_in_prosess#destoroy_shout'
+
 
 end

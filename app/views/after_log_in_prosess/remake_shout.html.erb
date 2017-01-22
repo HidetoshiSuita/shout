@@ -4,3 +4,17 @@
   <%=f.hidden_field :id, value:@shout[:id]%>
   <%=f.submit '更新する'%>
 <%end%>
+<script type="text/javascript">
+function myEnter(){
+    myRet = confirm("本当に削除しますか？");
+    if ( myRet == true ){
+       location.href = "destoroy_shout/<%=@shout[:id]%>";
+    }else{
+        alert("キャンセルしました");
+    }
+}
+</script>
+
+<form>
+<input type="button" value="削除する" onclick="myEnter()">
+</form>
