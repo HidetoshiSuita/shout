@@ -29,7 +29,11 @@ gem 'jbuilder', '~> 2.5'
 group :development do
   # 高機能コンソール
   gem 'pry-rails'
-
+  #テスト
+  gem 'rspec-rails'
+  gem 'guard-rspec', require: false # guardでrspecを動かす
+  gem 'terminal-notifier'
+  gem 'terminal-notifier-guard'  # デスクトップ通知を行う
   # デバッガー
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
