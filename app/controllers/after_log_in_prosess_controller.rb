@@ -13,19 +13,19 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
       @shout = ShoutList.where(:user_id => current_user.id)
-      follow_user = FollowList.where(:user_id => current_user.id)
-
-      follow_shout = ShoutList.new
-
-      follow_user.each do |info|
-        result = ShoutList.where(:user_id => info[:follow_id])
-        follow_shout.merge(result)
-      end
-
-      p '00000000000000'
-        pp follow_shout.class
-      p '00000000000000'
-      @shout.merge(follow_shout)
+      # follow_user = FollowList.where(:user_id => current_user.id)
+      #
+      # follow_shout = ShoutList.new
+      #
+      # follow_user.each do |info|
+      #   result = ShoutList.where(:user_id => info[:follow_id])
+      #   follow_shout.merge(result)
+      # end
+      #
+      # p '00000000000000'
+      #   pp follow_shout.class
+      # p '00000000000000'
+      # @shout.merge(follow_shout)
       @shout.sort_by {|info| info[:created_at]}.reverse
  end
 
