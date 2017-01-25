@@ -56,15 +56,15 @@ class AfterLogInProsessController < ApplicationController
  end
 
  def register_resp
-    resp_shout = ShoutList.new(resp)
     #:shout=返信内容、:user_id=返信者のuser_id, :id=返信対象となるshoutのid
     resp_shout=ShoutList.new(
       :shout => resp[:shout], :user_id => resp[:user_id],:resp_shout => resp[:id]
                             )
+    resp_user_shout=ShoutList.find_by(:id => resp_shout[:resp_shout])
 
     if resp_shout.save
       PostMailer.resp_email(
-        User.find_by(:id =>current_user.id),User.find_by(:id => resp[:user_id])).deliver
+        User.find_by(:id =>current_user.id),User.find_by(:id => resp_user_shout[:user_id])).deliver
     end
 
     redirect_to :action => "watch_shout"
