@@ -1,3 +1,3 @@
 require "spec_helper"
 
-describe FollowList
+Rspec describe FollowList :type :model

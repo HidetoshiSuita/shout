@@ -9,4 +9,5 @@ class FollowList < ApplicationRecord
     end
     follow_list.push(my_id)
   end
+
 end

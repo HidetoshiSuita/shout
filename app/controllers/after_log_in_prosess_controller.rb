@@ -13,7 +13,7 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
-  @shout=ShoutList.where(:user_id => follow_list).order(created_at: :desc)
+  @shout = ShoutList.where(:user_id => follow_list).order(created_at: :desc)
  end
 
   def find_user
