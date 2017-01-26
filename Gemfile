@@ -31,9 +31,9 @@ group :development do
   gem 'pry-rails'
   #テスト
   gem 'rspec-rails'
-  gem 'guard-rspec', require: false # guardでrspecを動かす
+  gem 'guard-rspec', require: false #guardでrspecを動かす
   gem 'terminal-notifier'
-  gem 'terminal-notifier-guard'  # デスクトップ通知を行う
+  gem 'terminal-notifier-guard'#デスクトップ通知を行う
   # デバッガー
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
