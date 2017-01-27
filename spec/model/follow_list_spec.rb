@@ -19,6 +19,6 @@ describe FollowList, type: :model do
       follow_user.update(:user_id => 1, :follow_id => 2)
       follow_user2.update(:user_id => 1, :follow_id => 3)
       expect(FollowList.get_follow_info_list(my_id)).to eq [2,3,1]
-    end 
+    end
   end
 end
