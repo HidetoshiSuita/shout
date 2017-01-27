@@ -37,7 +37,8 @@ group :development do
   # デバッガー
   gem 'pry-byebug'
   gem 'pry-stack_explorer'
-
+  # カバレッジ取得
+  gem "simplecov"
   # pryの入出力に色付け
   gem 'pry-coolline'
   gem 'awesome_print'

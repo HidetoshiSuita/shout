@@ -59,5 +59,4 @@ Rails.application.routes.draw do
 
   get '/after_log_in_prosess/remake_shout/destoroy_shout/:id' => 'after_log_in_prosess#destoroy_shout'
 
-
 end

@@ -14,9 +14,9 @@
         <!-- *_path はUserモデルを作成したときに、
           deviseにより自動で作成されてますので、rake routesで確認できます -->
         ようこそ <strong>
-          <%=link_to "#{current_user.name}" ,:controller => "after_log_in_prosess", :action => "watch_my_info", :id => current_user.id%>
+          <%= "#{current_user.name}"%>
         </strong>さん！
-        <%= link_to 'プロフィール変更', edit_user_registration_path %> |
+        <%= link_to 'アカウント管理', edit_user_registration_path %> |
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       <% else %>
         <%= link_to "ユーザー登録", new_user_registration_path %> |
