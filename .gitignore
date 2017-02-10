@@ -22,6 +22,3 @@ bin/db
 # Ignore Byebug command history file.
 .byebug_history
 #メールの情報が入っているため
-config/environments/development.rb
-
-/vendor/bundle/*
