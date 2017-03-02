@@ -7,6 +7,8 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <header>
+  	<h1>！SHOUT！</h1>
+	  これは怒りを共有するアプリです<br><br>
     <nav>
       <!-- user_signed_in? はユーザがログインしているか調べるdeviseのHelperメソッド -->
       <% if user_signed_in? %>
@@ -16,11 +18,9 @@
         ようこそ <strong>
           <%= "#{current_user.name}"%>
         </strong>さん！
+        <%= link_to 'メニュー', after_log_in_prosess_chose_path %> |
         <%= link_to 'アカウント管理', edit_user_registration_path %> |
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "ユーザー登録", new_user_registration_path %> |
-        <%= link_to "ログイン", new_user_session_path %>
       <% end %>
     </nav>
   </header>

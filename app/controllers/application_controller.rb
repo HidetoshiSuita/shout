@@ -2,11 +2,11 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  #ログインしていなかった時にログイン画面へ飛ばす処理
   def login_check
-    if user_signed_in? ==false
-       flash[:need_log_in]="ここからはログインが必要になります。"
-      redirect_to ('/users/sign_in')
-    end#ログインしていなかった時にログイン画面へ飛ばす処理
+    if user_signed_in? == false
+       redirect_to '/users/sign_in'
+    end
   end
   
   # 以下を追加

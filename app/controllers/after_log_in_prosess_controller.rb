@@ -1,5 +1,5 @@
 class AfterLogInProsessController < ApplicationController
-  before_action :login_check, only: :shout
+  before_action :login_check
 
  def choused
  end

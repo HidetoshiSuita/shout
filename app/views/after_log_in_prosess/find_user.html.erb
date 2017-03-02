@@ -1,4 +1,4 @@
-<%=link_to "戻る", :action => "chose"%>
+
 
 <%=search_form_for @q, url: after_log_in_prosess_find_user_result_path do |f|%>
   <%= f.label :name_cont, 'ユーザー名'%>
@@ -6,3 +6,5 @@
   <%= f.submit "Search" %>
 <%end%>
 <h4><%=flash[:follow_user_result]%></h4>
+
+<%=link_to "戻る", :action => "chose"%>
