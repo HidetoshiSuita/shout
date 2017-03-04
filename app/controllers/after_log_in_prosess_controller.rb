@@ -113,15 +113,28 @@ class AfterLogInProsessController < ApplicationController
     @info = User.new
     @user_info = User.find_by(:id => params[:id])
   end
+  
+  def show_img
+    @user = User.find(params[:id])
+    if !@user.img.nil?
+      send_data(@user.img, :type => @user.img_content, :disposition => 'inline')
+    end
+  end
 
   def action_update_my_info
+    
     info=User.new(update_my_info_params)
     user = User.find_by(:id =>info[:id])
-    if user.update(name:info[:name],introduction:info[:introduction])
+
+    user.img = params[:user][:img].read
+    user.img_content = params[:user][:img].content_type
+    
+    if user.update(name:info[:name], introduction:info[:introduction], img:user.img, img_content:user.img_content )
       flash[:update_my_info] = '変更しました。反映まで時間がかかる場合があります'
     else
       flash[:update_my_info] ='反映できませんでいした。もう一度お願いします。'
     end
+    
     redirect_to :action => "watch_my_info", :id => info[:id]
   end
 
@@ -161,7 +174,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_my_info_params
-    params.require(:user).permit(:id, :shout)
+    params.require(:user).permit(:id, :name, :introduction)
   end
 
   def update_shout_params
