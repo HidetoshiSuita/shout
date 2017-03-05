@@ -10,8 +10,8 @@
       <%result=User.find_by(:id => resp_user[:user_id])%>
       <%="#{result[:name]}さんへの返信"%>
     <%end%>
-
-    <p>名前：<%=find_user_name shout_list[:user_id]%></p>
+	<p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
+    <%=find_user_name shout_list[:user_id]%></p>
     <p>叫び：<%=simple_format(shout_list[:shout])%></p>
 
       <%if how_many_resp=ShoutList.find_by(:resp_shout => shout_list[:id]) %>

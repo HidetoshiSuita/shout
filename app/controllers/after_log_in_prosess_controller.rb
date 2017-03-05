@@ -122,12 +122,13 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def action_update_my_info
-    
     info=User.new(update_my_info_params)
     user = User.find_by(:id =>info[:id])
-
-    user.img = params[:user][:img].read
-    user.img_content = params[:user][:img].content_type
+    
+    if !params[:user][:img].nil?
+      user.img = params[:user][:img].read
+      user.img_content = params[:user][:img].content_type
+    end
     
     if user.update(name:info[:name], introduction:info[:introduction], img:user.img, img_content:user.img_content )
       flash[:update_my_info] = '変更しました。反映まで時間がかかる場合があります'

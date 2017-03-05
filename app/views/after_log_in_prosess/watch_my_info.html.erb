@@ -12,8 +12,9 @@
 <h5><%=link_to "プロフィールの設定", :controller => "after_log_in_prosess", :action => "update_my_info", :id => current_user.id%></h5>
 <%@shout.each do |shout|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-    <p>名前：<%=find_user_name shout[:user_id]%></p>
-    <p>叫び：<%= shout[:shout]%></p>
+  	<p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
+    <%=find_user_name shout[:user_id]%></p>
+    <p><%= shout[:shout]%></p>
     <%=link_to "返信する" ,"resp_shout/#{shout[:id]}"%>
     <p><%=LikeList.where(:shout_list_id => shout[:id]).size%>イイネ</p>
     <%if LikeList.find_by(:shout_list_id => shout[:id], :user_id => current_user.id)%>
