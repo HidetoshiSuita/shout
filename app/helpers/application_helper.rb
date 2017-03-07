@@ -8,4 +8,13 @@ module ApplicationHelper
     user_name = user_info_hash[:name]
 
   end
+  
+  def icon_list
+    arr = []
+    Dir.glob(Rails.root.join('public/img/icon/*')) do |f|
+      arr << f.sub(/.*public/, '')
+    end
+    return arr
+  end
+  
 end

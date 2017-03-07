@@ -1,6 +1,16 @@
 <%=form_for (@user) do |f| %>
-  <%= f.text_area :shout %>
-  <%= f.hidden_field :user_id, :value => current_user.id%>
-  <%=f.submit "叫ぶ" %>
+<div class="field">
+  <%= f.text_area :shout %><br>
+</div>
+<div class="field">
+	<table>
+		<% icon_list.each_with_index do |icon, index| %>
+		  <td><%= f.radio_button :emotion_no, index+1, :id => "#{index+1}" %>
+		  <%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
+		<% end %>
+	</table>
+</div>
+<%= f.hidden_field :user_id, :value => current_user.id%>
+<%=f.submit "叫ぶ" %>
 <% end %>
 <%=link_to "戻る", :action => "chose"%>

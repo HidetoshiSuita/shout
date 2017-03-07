@@ -8,5 +8,6 @@
     <p><%=find_user_name @un_resp[:user_id]%>さんへ</p>
     <p>返信者名：<%=find_user_name resp_hash[:user_id]%></p>
     <p>返信内容：<%=resp_hash[:shout]%></p>
+    <p><%= image_tag(after_log_in_prosess_icon_path(:id=>resp_hash[:emotion_no]))%></p>
   </div>
 <%end%>

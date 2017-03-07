@@ -7,6 +7,13 @@
 <div class = "resp_field">
   <%=form_for @resp_info ,:url => {:controller => 'after_log_in_prosess' ,:action => 'register_resp'} do |f| %>
   <p><%=f.text_area :shout %></p>
+  <table>
+	<% icon_list.each_with_index do |icon, index| %>
+		<td><%= f.radio_button :emotion_no, index+1, :id => "#{index+1}" %>
+		<%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
+	<% end %>
+  </table>
+</div>
   <%=f.hidden_field :user_id ,:value => current_user.id%>
   <%=f.hidden_field :id, :value => @un_resp[:id] %>
   <p><%=f.submit "返信する"%></p>

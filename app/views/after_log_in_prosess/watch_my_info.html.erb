@@ -15,6 +15,7 @@
   	<p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
     <%=find_user_name shout[:user_id]%></p>
     <p><%= shout[:shout]%></p>
+    <p><%= image_tag(after_log_in_prosess_icon_path(:id=>shout[:emotion_no]))%></p>
     <%=link_to "返信する" ,"resp_shout/#{shout[:id]}"%>
     <p><%=LikeList.where(:shout_list_id => shout[:id]).size%>イイネ</p>
     <%if LikeList.find_by(:shout_list_id => shout[:id], :user_id => current_user.id)%>

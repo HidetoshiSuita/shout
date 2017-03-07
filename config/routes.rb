@@ -42,6 +42,8 @@ Rails.application.routes.draw do
   get "/after_log_in_prosess/watch_my_info/:id" => 'after_log_in_prosess#watch_my_info'
   
   get "/after_log_in_prosess/show_img" => 'after_log_in_prosess#show_img'
+  
+  get "/after_log_in_prosess/icon" => 'after_log_in_prosess#icon'
 
   get '/after_log_in_prosess/watch_follow_user/:id' => 'after_log_in_prosess#watch_follow_user'
 

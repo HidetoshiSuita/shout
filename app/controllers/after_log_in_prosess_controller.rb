@@ -3,6 +3,16 @@ class AfterLogInProsessController < ApplicationController
 
  def choused
  end
+ 
+ def icon
+   puts "TESTTESTTESTTESTTEST"
+    emotion_no = params[:id]
+    puts emotion_no
+    img = File.open("public/img/icon/#{emotion_no}.png", "r+b")
+    bin = img.read
+    img.close
+    send_data( bin, type: "image/png", disposition: :inline)
+  end
 
  def shout
    @user = ShoutList.new
@@ -167,7 +177,7 @@ class AfterLogInProsessController < ApplicationController
   private
 
   def resp
-    params.require(:shout_list).permit(:shout, :user_id, :id)
+    params.require(:shout_list).permit(:shout, :user_id, :id, :emotion_no)
   end
 
   def user_id
@@ -179,6 +189,6 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_shout_params
-    params.require(:shout_list).permit(:shout, :id)
+    params.require(:shout_list).permit(:shout, :id, :emotion_no)
   end
 end
