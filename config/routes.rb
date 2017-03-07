@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :shout_lists
   devise_for :users, controllers: {registrations: "registrations"}
 
-
   get 'after_log_in_prosess/chose' =>'after_log_in_prosess#chose'
   root to: "after_log_in_prosess#chose"
 
