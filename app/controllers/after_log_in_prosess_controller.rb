@@ -13,11 +13,11 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
-   @shout = ShoutList.where(:user_id => follow_list).order(created_at: :desc)
+   @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :desc)
+   @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil)
  end
  
  def icon
-   puts "TESTTESTTESTTESTTEST"
     emotion_no = params[:id]
     puts emotion_no
     img = File.open("public/img/icon/#{emotion_no}.png", "r+b")
@@ -53,15 +53,16 @@ class AfterLogInProsessController < ApplicationController
  end
 
  def register_resp
-    #:shout=返信内容、:user_id=返信者のuser_id, :id=返信対象となるshoutのid
-    resp_shout=ShoutList.new(
-      :shout => resp[:shout], :user_id => resp[:user_id],:resp_shout => resp[:id]
+    #:shout=返信内容、:user_id=返信者のuser_id, :resp_shout=返信対象となるshoutのid
+    resp_shout = ShoutList.new(
+      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id]
                             )
-    resp_user_shout=ShoutList.find_by(:id => resp_shout[:resp_shout])
+    #返信先のユーザー
+    resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
 
     if resp_shout.save
       PostMailer.resp_email(
-        User.find_by(:id =>current_user.id),User.find_by(:id => resp_user_shout[:user_id])).deliver
+        User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
     end
 
     redirect_to :action => "watch_shout"
@@ -177,7 +178,7 @@ class AfterLogInProsessController < ApplicationController
   private
 
   def resp
-    params.require(:shout_list).permit(:shout, :user_id, :id, :emotion_no)
+    params.require(:shout_list).permit(:shout, :user_id, :id, :emotion_no, :reply_to )
   end
 
   def user_id
