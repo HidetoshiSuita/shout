@@ -13,7 +13,7 @@
 		<%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
 	<% end %>
   </table>
-</div>
+  
   <%=f.hidden_field :user_id ,:value => current_user.id%>
   <%=f.hidden_field :id, :value => @un_resp[:id] %>
   <p><%=f.submit "返信する"%></p>
