@@ -4,16 +4,6 @@ class AfterLogInProsessController < ApplicationController
  def choused
  end
  
- def icon
-   puts "TESTTESTTESTTESTTEST"
-    emotion_no = params[:id]
-    puts emotion_no
-    img = File.open("public/img/icon/#{emotion_no}.png", "r+b")
-    bin = img.read
-    img.close
-    send_data( bin, type: "image/png", disposition: :inline)
-  end
-
  def shout
    @user = ShoutList.new
  end
@@ -23,8 +13,18 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
-  @shout = ShoutList.where(:user_id => follow_list).order(created_at: :desc)
+   @shout = ShoutList.where(:user_id => follow_list).order(created_at: :desc)
  end
+ 
+ def icon
+   puts "TESTTESTTESTTESTTEST"
+    emotion_no = params[:id]
+    puts emotion_no
+    img = File.open("public/img/icon/#{emotion_no}.png", "r+b")
+    bin = img.read
+    img.close
+    send_data( bin, type: "image/png", disposition: :inline)
+  end
 
   def find_user
     @q = User.search
@@ -157,7 +157,7 @@ class AfterLogInProsessController < ApplicationController
   def update_shout
    shout=ShoutList.new(update_shout_params)
    info=ShoutList.find_by(:id =>shout[:id] )
-   if info.update(:shout => shout[:shout])
+   if info.update(:shout => shout[:shout],:emotion_no => shout[:emotion_no])
      flash[:update_shut_result] = '更新しました'
    else
      flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'

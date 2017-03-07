@@ -74,5 +74,8 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+gem "rb-readline", :require => false
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
