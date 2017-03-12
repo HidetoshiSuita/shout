@@ -70,6 +70,6 @@ class ShoutListsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def shout_list_params
-      params.require(:shout_list).permit(:shout, :user_id, :emotion_no,:reply_to)
+      params.require(:shout_list).permit(:shout, :user_id, :emotion_no, :reply_to)
     end
 end

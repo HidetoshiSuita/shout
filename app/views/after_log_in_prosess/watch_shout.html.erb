@@ -32,7 +32,7 @@
     <%end%>
   </div>
   <%@resp_shout.each do |resp_shout_list|%>
-  	<%if resp_shout_list[:resp_shout] == shout_list[:user_id] %>
+  	<%if resp_shout_list[:resp_shout] == shout_list[:id] %>
 		  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 		  	
 		    <%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
