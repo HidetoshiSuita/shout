@@ -10,11 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170314170700) do
+ActiveRecord::Schema.define(version: 20170321182135) do
+
+  create_table "articles", force: :cascade do |t|
+    t.string   "tag"
+    t.text     "comment"
+    t.integer  "shout_id"
+    t.integer  "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "follow_lists", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "follow_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "genres", force: :cascade do |t|
+    t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -35,6 +50,13 @@ ActiveRecord::Schema.define(version: 20170314170700) do
     t.integer  "emotion_no"
   end
 
+  create_table "user_genres", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -52,6 +74,7 @@ ActiveRecord::Schema.define(version: 20170314170700) do
     t.text     "introduction"
     t.binary   "img"
     t.string   "img_content"
+    t.integer  "genre_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

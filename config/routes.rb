@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
 
+  resources :genres
   resources :like_lists
   resources :follow_lists
   resources :shout_lists
   devise_for :users, controllers: {registrations: "registrations"}
-
+  
+  
+  get 'articles/articles_menu' => 'articles#articles_menu'
+  get 'admin/admin_menu' => 'admin#admin_menu'
+  
   get 'after_log_in_prosess/chose' =>'after_log_in_prosess#chose'
   root to: "after_log_in_prosess#chose"
-
   get 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'
 
   get 'after_log_in_prosess/watch_shout' => 'after_log_in_prosess#watch_shout'

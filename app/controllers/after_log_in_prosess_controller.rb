@@ -63,7 +63,7 @@ class AfterLogInProsessController < ApplicationController
 
     if resp_shout.save
       PostMailer.resp_email(
-        User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
+      User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
     end
     
     redirect_to :action => "watch_shout"
