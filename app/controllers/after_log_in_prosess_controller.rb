@@ -4,6 +4,9 @@ class AfterLogInProsessController < ApplicationController
  def choused
  end
  
+ def menu
+ end
+ 
  def shout
    @user = ShoutList.new
  end

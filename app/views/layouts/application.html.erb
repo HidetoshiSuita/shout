@@ -16,17 +16,16 @@
         <!-- *_path はUserモデルを作成したときに、
           deviseにより自動で作成されてますので、rake routesで確認できます -->
         ようこそ <strong>
-          <%= "#{current_user.name}"%>
+          <%=link_to "#{current_user.name}", "/after_log_in_prosess/watch_my_info/#{current_user.id}"%>
         </strong>さん！
-        <%= link_to 'アカウント管理', edit_user_registration_path %> |
+        <%= link_to 'アカウント管理', edit_user_registration_path %>|
+        <%=link_to '友人の叫びを見る' , after_log_in_prosess_watch_shout_path%>｜
         <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
       <% end %>
     </nav>
   </header>
 <hr>
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
     <%= yield %>
   </body>
 </html>

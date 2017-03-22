@@ -9,9 +9,10 @@ Rails.application.routes.draw do
   
   get 'articles/articles_menu' => 'articles#articles_menu'
   get 'admin/admin_menu' => 'admin#admin_menu'
+  get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
+  root to: "after_log_in_prosess#menu"
   
   get 'after_log_in_prosess/chose' =>'after_log_in_prosess#chose'
-  root to: "after_log_in_prosess#chose"
   get 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'
 
   get 'after_log_in_prosess/watch_shout' => 'after_log_in_prosess#watch_shout'
