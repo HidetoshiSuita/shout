@@ -10,11 +10,6 @@
   <%=f.text_area :introduction, value:@user_info[:introduction]%>
   <%=f.hidden_field :id, value:current_user.id%>
   
-  <div class="field">
-    <%= f.label "ジャンル" %><br>
-	<%= f.select :genre_id, Genre.map{|g| [g.name, g.id]} %>
-  </div>
-  
   <br>
   <br>
   <%=f.submit "上書きする"%>
