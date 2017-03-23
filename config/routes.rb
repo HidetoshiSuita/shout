@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :articles
   resources :genres
   resources :like_lists
   resources :follow_lists
@@ -10,6 +11,8 @@ Rails.application.routes.draw do
   get 'articles/articles_menu' => 'articles#articles_menu'
   get 'admin/admin_menu' => 'admin#admin_menu'
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
+  post 'after_log_in_prosess/new_article_action' => 'after_log_in_prosess#new_article_action'
+  
   root to: "after_log_in_prosess#menu"
   
   get 'after_log_in_prosess/chose' =>'after_log_in_prosess#chose'

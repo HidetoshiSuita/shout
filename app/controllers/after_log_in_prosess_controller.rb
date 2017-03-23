@@ -1,11 +1,33 @@
 class AfterLogInProsessController < ApplicationController
   before_action :login_check
-
- def choused
- end
  
  def menu
+   #新着順
+   #@genre=>ジャンル　@article=>話題提供
+   if params[:genre_id].present?
+       genre_id = params[:genre_id]
+       @article = Article.where('genre_id = #{genre_id}').order(created_at: :desc)
+   else
+       @article = Article.order(created_at: :desc)
+   end
+   
+   @genre = Genre.all
+   #絞り込み検索結果を反映
+   @article_info = Article.new
  end
+ 
+ def favorite
+   #人気順
+ end
+ 
+ def my_genre
+   #ジャンル別
+ end
+ 
+ def new_article_action
+ end
+ 
+ #---------------------------------------------------------------
  
  def shout
    @user = ShoutList.new

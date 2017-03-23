@@ -1,0 +1,42 @@
+<!--header_link-->
+<table>
+	<td><h1><%= link_to "新着順", :controller => "after_log_in_prosess", :action => "menu" %></h1></td> 
+	<td><h1><%= link_to "人気順", :controller => "after_log_in_prosess", :action => "menu" %></h1></td>
+	<td><h1><%= link_to "自分用", :controller => "after_log_in_prosess", :action => "menu" %></h1></td>
+</table>
+<!--genre_link-->
+<table>
+	<% @genre.each do |g| %>
+		<td><%= link_to "#{g.name}", :controller => "after_log_in_prosess", :action => "menu", genre_id: g.id %></td>
+	<% end %>
+</table>
+<br><br><br>
+<!--new contents-->
+<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'new_article_action'} do |f| %>
+  <%=f.label "タイトル"%>
+  <%= f.text_field :title, :size=>"80" %>
+  <br><br>
+  <%=f.label "url(Twitter の共有url)"%>
+  <%= f.text_field :tag, :size=>"80" %>
+  <br><br>
+  <%=f.label "コメント"%>
+  <%= f.text_area :comment, :size=>"80x20" %>
+  <br><br>
+  <%=f.label "画像"%>
+  <%= f.file_field  :img %>
+  <br><br>
+  <%=f.submit "新規作成"%>
+<%end%>
+<br><br><br>
+
+<!--contents-->
+<% if @article.present? %>
+	<h1>話題一覧</h1>
+	<%@article.each do |art|%>
+	  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+	  	<%= art[:title] %><br>
+	  	<%= art[:url] %><br>
+	  	<%= art[:comment] %><br>
+	  </div>
+	<%end%>
+<%end%>
