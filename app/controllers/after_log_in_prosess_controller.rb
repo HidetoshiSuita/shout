@@ -8,7 +8,7 @@ class AfterLogInProsessController < ApplicationController
        genre_id = params[:genre_id]
        @article = Article.where('genre_id = #{genre_id}').order(created_at: :desc)
    else
-       @article = Article.order(created_at: :desc)
+       @article = Article.all.order(created_at: :desc)
    end
    
    @genre = Genre.all
@@ -25,6 +25,18 @@ class AfterLogInProsessController < ApplicationController
  end
  
  def new_article_action
+   puts "TEST"
+   @article = Article.new(@article_info)
+
+   respond_to do |format|
+     if @article.save
+       format.html { redirect_to @article, notice: 'Article was successfully created.' }
+       format.json { render :menu, status: :created, location: @article }
+     else
+       format.html { render :menu }
+       format.json { render json: @article.errors, status: :unprocessable_entity }
+     end
+   end
  end
  
  #---------------------------------------------------------------
@@ -217,5 +229,9 @@ class AfterLogInProsessController < ApplicationController
 
   def update_shout_params
     params.require(:shout_list).permit(:shout, :id, :emotion_no)
+  end
+  
+  def update_article_params
+    params.require(:article).permit(:shout, :id, :emotion_no)
   end
 end
