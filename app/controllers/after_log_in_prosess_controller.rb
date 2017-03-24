@@ -4,9 +4,10 @@ class AfterLogInProsessController < ApplicationController
  def menu
    #新着順
    #@genre=>ジャンル　@article=>話題提供
-   if params[:genre_id].present?
-       genre_id = params[:genre_id]
-       @article = Article.where('genre_id = #{genre_id}').order(created_at: :desc)
+   @genre_id = 1
+   if !params[:genre_id].nil?
+       @genre_id = params[:genre_id]
+       @article = Article.where("genre_id = #{@genre_id}").order(created_at: :desc)
    else
        @article = Article.all.order(created_at: :desc)
    end
@@ -14,6 +15,7 @@ class AfterLogInProsessController < ApplicationController
    @genre = Genre.all
    #絞り込み検索結果を反映
    @article_info = Article.new
+   
  end
  
  def favorite
@@ -25,16 +27,16 @@ class AfterLogInProsessController < ApplicationController
  end
  
  def new_article_action
-   puts "TEST"
-   @article = Article.new(@article_info)
-
+   
+   @article_info = Article.new(new_create_article)
+   
    respond_to do |format|
-     if @article.save
-       format.html { redirect_to @article, notice: 'Article was successfully created.' }
-       format.json { render :menu, status: :created, location: @article }
+     if @article_info.save
+       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.', genre_id: 1 }
+       format.json { render :menu, status: :created, location: @article_info }
      else
        format.html { render :menu }
-       format.json { render json: @article.errors, status: :unprocessable_entity }
+       format.json { render json: @article_info.errors, status: :unprocessable_entity }
      end
    end
  end
@@ -231,7 +233,9 @@ class AfterLogInProsessController < ApplicationController
     params.require(:shout_list).permit(:shout, :id, :emotion_no)
   end
   
-  def update_article_params
-    params.require(:article).permit(:shout, :id, :emotion_no)
+  def new_create_article
+    params.require(:article).permit(:title, :tag, :comment, :img, :genre_id, :user_id)
   end
+  
+
 end

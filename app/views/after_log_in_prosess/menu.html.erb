@@ -1,3 +1,43 @@
+<script>
+$(function () {
+    $('.shout_button').prevAll().hide();
+    $('.shout_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('この話題について叫ぶ').removeClass('close');
+        }
+    });
+    
+    $('.view_article_button').prevAll().hide();
+    $('.view_article_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('この話題について叫びをみる').removeClass('close');
+        }
+    });
+    
+    $('.new_article_button').prevAll().hide();
+    $('.new_article_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('話題作成').removeClass('close');
+        }
+    });
+});
+
+$(document).ready(ready);
+$(document).on('page:load', ready);
+</script>
+
 <!--header_link-->
 <table>
 	<td><h1><%= link_to "新着順", :controller => "after_log_in_prosess", :action => "menu" %></h1></td> 
@@ -10,33 +50,55 @@
 		<td><%= link_to "#{g.name}", :controller => "after_log_in_prosess", :action => "menu", genre_id: g.id %></td>
 	<% end %>
 </table>
-<br><br><br>
+<br>
 <!--new contents-->
-<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'new_article_action'} do |f| %>
-  <%=f.label "タイトル"%>
-  <%= f.text_field :title, :size=>"80" %>
-  <br><br>
-  <%=f.label "url(Twitter の共有url)"%>
-  <%= f.text_field :tag, :size=>"80" %>
-  <br><br>
-  <%=f.label "コメント"%>
-  <%= f.text_area :comment, :size=>"80x20" %>
-  <br><br>
-  <%=f.label "画像"%>
-  <%= f.file_field  :img %>
-  <br><br>
-  <%=f.submit "新規作成"%>
-<%end%>
-<br><br><br>
+<div class="content">
+	<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'new_article_action'} do |f| %>
+	  <%=f.label "タイトル"%>
+	  <%= f.text_field :title, :size=>"80" %>
+	  <br><br>
+	  <%=f.label "埋め込みタグ"%>
+	  <%= f.text_field :tag, :size=>"80" %>
+	  <br><br>
+	  <%=f.label "コメント"%>
+	  <%= f.text_area :comment, :size=>"80x20" %>
+	  <br><br>
+	  <%=f.label "画像"%>
+	  <%= f.file_field  :img %>
+	  <br><br>
+	  <%= f.hidden_field :user_id, :value => current_user.id %>
+	  <%= f.hidden_field :genre_id, :value => @genre_id %>
+	  <%=f.submit "新規作成"%>
+	<%end%>
+	<p class="new_article_button">話題作成</p>
+</div>
 
+<br>
 <!--contents-->
-<% if @article.present? %>
+<% if !@article.nil? %>
 	<h1>話題一覧</h1>
 	<%@article.each do |art|%>
-	  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-	  	<%= art[:title] %><br>
-	  	<%= art[:url] %><br>
-	  	<%= art[:comment] %><br>
-	  </div>
+		<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+		  	<h2><%= art[:title] %></h2>
+		  	<%= art[:tag].html_safe %><br><br>
+		  	<%if !art[:img].nil? %>
+		  		<%= art[:img] %><br>
+		  	<%end%>
+			<%= art[:comment] %><br><br>
+			<table>
+			<% if current_user.id == art[:user_id] %>
+			<p><%= link_to "この話題の編集"%></p>
+			<% end %>
+			<br><br>
+			<div class="content">
+				<p>TEST</p>
+				<p class="shout_button">この話題について叫ぶ</p>
+			</div>
+			<div class="content">
+				<p>TEST2</p>
+				<p class="view_article_button">この話題について叫びをみる</p>
+			</div>
+			</table>
+		</div>
 	<%end%>
 <%end%>
