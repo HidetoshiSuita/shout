@@ -68,7 +68,7 @@ $(document).on('page:load', ready);
 	  <br><br>
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
 	  <%= f.hidden_field :genre_id, :value => @genre_id %>
-	  <%=f.submit "新規作成"%>
+	  <%=f.submit "決定"%>
 	<%end%>
 	<p class="new_article_button">話題作成</p>
 </div>
@@ -91,7 +91,24 @@ $(document).on('page:load', ready);
 			<% end %>
 			<br><br>
 			<div class="content">
-				<p>TEST</p>
+				<%=form_for (@shout) do |f| %>
+					<div class="field">
+						<%= f.text_area :shout %><br>
+					</div>
+					<div class="field">
+						<table>
+							<% icon_list.each_with_index do |icon, index| %>
+							  <td><%= f.radio_button :emotion_no, index+1, :id => "#{index+1}" %>
+							  <%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
+							<% end %>
+						</table>
+					</div>
+					<%= f.hidden_field :user_id, :value => current_user.id %>
+					<%= f.hidden_field :article_id, :value => art[:id] %>
+					<%=f.submit "叫ぶ" %>
+					<% end %>
+
+				<%end%>
 				<p class="shout_button">この話題について叫ぶ</p>
 			</div>
 			<div class="content">
