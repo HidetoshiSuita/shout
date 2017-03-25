@@ -27,12 +27,11 @@ class AfterLogInProsessController < ApplicationController
  end
  
  def new_article_action
-   
    @article_info = Article.new(new_create_article)
    
    respond_to do |format|
      if @article_info.save
-       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.', genre_id: 1 }
+       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.' }
        format.json { render :menu, status: :created, location: @article_info }
      else
        format.html { render :menu }
@@ -40,13 +39,23 @@ class AfterLogInProsessController < ApplicationController
      end
    end
  end
+
+ def shout
+   @shout = ShoutList.new(update_shout_params)
+   
+   respond_to do |format|
+     if @shout.save
+       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Shout was successfully created.' }
+       format.json { render :menu, status: :created, location: @shout }
+     else
+       format.html { render :menu }
+       format.json { render json: @shout.errors, status: :unprocessable_entity }
+     end
+   end
+ end
  
  #---------------------------------------------------------------
  
- def shout
-   @user = ShoutList.new
- end
-
  def shout_aftre
  end
 
@@ -230,7 +239,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_shout_params
-    params.require(:shout_list).permit(:shout, :id, :emotion_no)
+    params.require(:shout_list).permit(:shout, :id, :emotion_no, :article_id, :user_id)
   end
   
   def new_create_article

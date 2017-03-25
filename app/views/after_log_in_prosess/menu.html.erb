@@ -80,7 +80,7 @@ $(document).on('page:load', ready);
 	<%@article.each do |art|%>
 		<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 		  	<h2><%= art[:title] %></h2>
-		  	<%= art[:tag].html_safe %><br><br>
+		  	<%= art[:tag] %><br><br>
 		  	<%if !art[:img].nil? %>
 		  		<%= art[:img] %><br>
 		  	<%end%>
@@ -91,7 +91,22 @@ $(document).on('page:load', ready);
 			<% end %>
 			<br><br>
 			<div class="content">
-				<p>TEST</p>
+				<%=form_for @shout, :url => {:controller => 'after_log_in_prosess', :action => 'shout'} do |f| %>
+					<div class="field">
+					  <%= f.text_area :shout %><br>
+					</div>
+					<div class="field">
+						<table>
+							<% icon_list.each_with_index do |icon, index| %>
+							  <td><%= f.radio_button :emotion_no, index+1, :id => "#{index+1}" %>
+							  <%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
+							<% end %>
+						</table>
+					</div>
+					<%= f.hidden_field :article_id, :value => art[:id] %>
+					<%= f.hidden_field :user_id, :value => current_user.id %>
+					<%=f.submit "叫ぶ" %>
+				<% end %>
 				<p class="shout_button">この話題について叫ぶ</p>
 			</div>
 			<div class="content">

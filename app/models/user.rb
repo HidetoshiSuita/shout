@@ -10,5 +10,6 @@ class User < ApplicationRecord
   
   has_many :genres
   has_many :user_genres
+  has_many :articles
 
 end
