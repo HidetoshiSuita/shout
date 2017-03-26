@@ -30,10 +30,9 @@
     <%if how_many_resp=ShoutList.find_by(:resp_shout => shout_list[:id]) %>
       <%=link_to "返信を見る", "watch_resp_shout/#{shout_list[:id]}" %>
     <%end%>
-  </div>
-  <%@resp_shout.each do |resp_shout_list|%>
-  	<%if resp_shout_list[:resp_shout] == shout_list[:id] %>
-		  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+    <%@resp_shout.each do |resp_shout_list|%>
+  		<%if resp_shout_list[:resp_shout] == shout_list[:id] %>
+		  <div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
 		  	
 		    <%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
 		    <%if resp_user %>
@@ -64,6 +63,8 @@
 		    <%end%>
 		  </div>
 	<%end%>
+  </div>
+
   <%end%>
 <%end%>
 
