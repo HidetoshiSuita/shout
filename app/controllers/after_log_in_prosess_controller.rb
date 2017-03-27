@@ -41,7 +41,30 @@ class AfterLogInProsessController < ApplicationController
      end
    end
  end
-
+ 
+ # edit_article_action 変更画面への遷移　update_article_action　変更画面での決定押下時の動作
+ def edit_article_action
+ end
+ def update_article_action
+ end
+ 
+ # remake_shout 変更画面への遷移　update_shout　変更画面での決定押下時の動作
+ def remake_shout
+    @shout=ShoutList.find_by(:id => params[:id])
+    @result = ShoutList.new
+ end
+ def update_shout
+   shout=ShoutList.new(update_shout_params)
+   info=ShoutList.find_by(:id =>shout[:id] )
+   if info.update(:shout => shout[:shout],:emotion_no => shout[:emotion_no])
+     flash[:update_shut_result] = '更新しました'
+   else
+     flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'
+   end
+   redirect_to :action => "watch_shout"
+ end
+ 
+ 
  def shout
    @shout = ShoutList.new(update_shout_params)
    respond_to do |format|
@@ -60,9 +83,9 @@ class AfterLogInProsessController < ApplicationController
    @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :asc)
    @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil).order(created_at: :asc)
  end
- 
+  
+ #返信時のshoutを登録
  def register_resp
-    
     #:shout=返信内容、:user_id=返信者のuser_id, :resp_shout=返信対象となるshoutのid
     resp_shout = ShoutList.new(
       :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :emotion_no => resp[:emotion_no]
@@ -198,22 +221,6 @@ class AfterLogInProsessController < ApplicationController
     end
     
     redirect_to :action => "watch_my_info", :id => info[:id]
-  end
-
-  def remake_shout
-    @shout=ShoutList.find_by(:id => params[:id])
-    @result = ShoutList.new
-  end
-
-  def update_shout
-   shout=ShoutList.new(update_shout_params)
-   info=ShoutList.find_by(:id =>shout[:id] )
-   if info.update(:shout => shout[:shout],:emotion_no => shout[:emotion_no])
-     flash[:update_shut_result] = '更新しました'
-   else
-     flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'
-   end
-   redirect_to :action => "watch_shout"
   end
 
   def destoroy_shout
