@@ -13,9 +13,11 @@ class AfterLogInProsessController < ApplicationController
    end
    
    @genre = Genre.all
-   #絞り込み検索結果を反映
    @article_info = Article.new
+   @shout = ShoutList.new
    
+   @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
  
  def favorite
@@ -27,12 +29,11 @@ class AfterLogInProsessController < ApplicationController
  end
  
  def new_article_action
-   
    @article_info = Article.new(new_create_article)
    
    respond_to do |format|
      if @article_info.save
-       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.', genre_id: 1 }
+       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.' }
        format.json { render :menu, status: :created, location: @article_info }
      else
        format.html { render :menu }
@@ -40,20 +41,46 @@ class AfterLogInProsessController < ApplicationController
      end
    end
  end
- 
- #---------------------------------------------------------------
- 
- def shout
-   @user = ShoutList.new
- end
 
- def shout_aftre
+ def shout
+   @shout = ShoutList.new(update_shout_params)
+   respond_to do |format|
+     if @shout.save
+       format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Shout was successfully created.' }
+       format.json { render :menu, status: :created, location: @shout }
+     else
+       format.html { render :menu }
+       format.json { render json: @shout.errors, status: :unprocessable_entity }
+     end
+   end
  end
 
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
-   @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :desc)
-   @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil)
+   @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil).order(created_at: :asc)
+ end
+ 
+ def register_resp
+    
+    #:shout=返信内容、:user_id=返信者のuser_id, :resp_shout=返信対象となるshoutのid
+    resp_shout = ShoutList.new(
+      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :emotion_no => resp[:emotion_no]
+                            )
+    #返信先のユーザー
+    resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
+
+    if resp_shout.save
+      PostMailer.resp_email(
+      User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
+    end
+    
+    redirect_to :action => "menu"
+ end
+ 
+ #---------------------------------------------------------------
+ 
+ def shout_aftre
  end
  
  def icon
@@ -89,23 +116,6 @@ class AfterLogInProsessController < ApplicationController
  def resp_shout
    @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
    @resp_info = ShoutList.new
- end
-
- def register_resp
-    
-    #:shout=返信内容、:user_id=返信者のuser_id, :resp_shout=返信対象となるshoutのid
-    resp_shout = ShoutList.new(
-      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :emotion_no => resp[:emotion_no]
-                            )
-    #返信先のユーザー
-    resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
-
-    if resp_shout.save
-      PostMailer.resp_email(
-      User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
-    end
-    
-    redirect_to :action => "watch_shout"
  end
 
  def watch_resp_shout
@@ -230,7 +240,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_shout_params
-    params.require(:shout_list).permit(:shout, :id, :emotion_no)
+    params.require(:shout_list).permit(:shout, :id, :emotion_no, :article_id, :user_id)
   end
   
   def new_create_article

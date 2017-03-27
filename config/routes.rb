@@ -12,11 +12,12 @@ Rails.application.routes.draw do
   get 'admin/admin_menu' => 'admin#admin_menu'
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
   post 'after_log_in_prosess/new_article_action' => 'after_log_in_prosess#new_article_action'
-  
+  post 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'  
   root to: "after_log_in_prosess#menu"
   
+
+
   get 'after_log_in_prosess/chose' =>'after_log_in_prosess#chose'
-  get 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'
 
   get 'after_log_in_prosess/watch_shout' => 'after_log_in_prosess#watch_shout'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

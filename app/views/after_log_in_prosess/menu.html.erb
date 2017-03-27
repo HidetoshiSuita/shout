@@ -11,14 +11,14 @@ $(function () {
         }
     });
     
-    $('.view_article_button').prevAll().hide();
-    $('.view_article_button').click(function () {
+    $('.shout_list_button').prevAll().hide();
+    $('.shout_list_button').click(function () {
         if ($(this).prevAll().is(':hidden')) {
             $(this).prevAll().slideDown();
             $(this).text('閉じる').addClass('close');
         } else {
             $(this).prevAll().slideUp();
-            $(this).text('この話題について叫びをみる').removeClass('close');
+            $(this).text('返信を見る').removeClass('close');
         }
     });
     
@@ -68,9 +68,10 @@ $(document).on('page:load', ready);
 	  <br><br>
 	  <%= f.hidden_field :user_id, :value => current_user.id %>
 	  <%= f.hidden_field :genre_id, :value => @genre_id %>
-	  <%=f.submit "決定"%>
+	  <%=f.submit "新規作成"%>
 	<%end%>
-	<p class="new_article_button">話題作成</p>
+	<br><br>
+	<div class="new_article_button">話題作成</div>
 </div>
 
 <br>
@@ -79,43 +80,105 @@ $(document).on('page:load', ready);
 	<h1>話題一覧</h1>
 	<%@article.each do |art|%>
 		<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-		  	<h2><%= art[:title] %></h2>
-		  	<%= art[:tag].html_safe %><br><br>
-		  	<%if !art[:img].nil? %>
-		  		<%= art[:img] %><br>
-		  	<%end%>
-			<%= art[:comment] %><br><br>
-			<table>
-			<% if current_user.id == art[:user_id] %>
-			<p><%= link_to "この話題の編集"%></p>
+		  	<div class="content">
+			  	<h2><%= art[:title] %></h2>
+			  	<% if !art[:tag].nil? %>
+			  		<div id = "iframe">
+			  			<%= art[:tag].html_safe %><br><br>
+			  		</div>
+			  	<% end %>
+			  	<%= art[:img] %><br>
+				<%= art[:comment] %><br><br>
+				<% if current_user.id == art[:user_id] %>
+					<%= link_to "この話題の編集"%><br><br>
+				<% end %>
+				<%= "#{art.created_at.strftime("%Y-%m-%d %H:%M")}"%>に<%= link_to "#{art.user.name}" ,"find_user_detail/#{art.user_id}"%>によって作成。<br><br>
+			</div>
+			<br><br>
+			
+			<%=form_for @shout, :url => {:controller => 'after_log_in_prosess', :action => 'shout'} do |f| %>
+				<%= f.text_area :shout, :size=>"80x10" %><br>
+					<table>
+						<% icon_list.each_with_index do |icon, index| %>
+							<td><%= f.radio_button :emotion_no, index+1, :id => "#{index+1}" %>
+							<%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
+						<% end %>
+					</table>
+				<%= f.hidden_field :article_id, :value => art[:id] %>
+				<%= f.hidden_field :user_id, :value => current_user.id %>
+				<%=f.submit "叫ぶ" %>
 			<% end %>
 			<br><br>
-			<div class="content">
-				<%=form_for (@shout) do |f| %>
-					<div class="field">
-						<%= f.text_area :shout %><br>
-					</div>
-					<div class="field">
-						<table>
-							<% icon_list.each_with_index do |icon, index| %>
-							  <td><%= f.radio_button :emotion_no, index+1, :id => "#{index+1}" %>
-							  <%= f.label :emotion_no, image_tag(icon), :for => "#{index+1}" %></td>
+		
+		<!-- belongs to article, shout list -->
+		<% @shout_list.each do |shout_list| %>
+			<%if shout_list[:article_id] == art[:id] %>
+				<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+	    	
+				    <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
+					<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"find_user_detail/#{shout_list.user_id}"%><br><br><br>
+					    
+					<%= shout_list[:shout] %><br>
+					<%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%>
+					
+				    <br><br><%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
+				    <br><br><br>
+				
+				    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
+				      <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
+				    <%else%>
+				      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
+				    <%end%>
+				    
+				    <%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイネ
+				    <br><br>
+				
+				    <%if current_user.id == shout_list[:user_id]%>
+				      <%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
+				    <%end%>
+				    <br><br>
+				    <div class="content">
+						<%@resp_shout.each do |resp_shout_list|%>
+							<%if resp_shout_list[:resp_shout] == shout_list[:id] %>
+								<div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
+									  	
+									<%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
+									<%if resp_user %>
+							      		<%result=User.find_by(:id => resp_user[:user_id])%>
+							      		<%="#{result[:name]}さんへの返信"%><br><br>
+							    	<%end%>
+							    		
+									<%= image_tag(after_log_in_prosess_show_img_path(:id=>resp_shout_list[:user_id]), :size => "100x100") %><br>
+									<%=find_user_name resp_shout_list[:user_id]%><br><br><br>
+										    
+									<%= resp_shout_list[:shout] %><br>
+									<%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%>
+										
+									<br><br><%=link_to "返信する" ,"resp_shout/#{resp_shout_list[:id]}"%>
+									<br><br><br>
+									
+									<%if LikeList.find_by(:shout_list_id => resp_shout_list[:id], :user_id => current_user.id)%>
+										<%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
+									<%else%>
+										<%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
+									<%end%>
+									    
+									<%=LikeList.where(:shout_list_id => resp_shout_list[:id]).size%>イイネ
+									<br><br>
+									<%if current_user.id == resp_shout_list[:user_id]%>
+										<%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
+									<%end%>
+									
+								</div>
 							<% end %>
-						</table>
+						<% end %>
+						<%if how_many_resp=ShoutList.find_by(:resp_shout => shout_list[:id]) %>
+							<div class="shout_list_button">返信を見る</div>
+						<% end %>
 					</div>
-					<%= f.hidden_field :user_id, :value => current_user.id %>
-					<%= f.hidden_field :article_id, :value => art[:id] %>
-					<%=f.submit "叫ぶ" %>
-					<% end %>
-
-				<%end%>
-				<p class="shout_button">この話題について叫ぶ</p>
-			</div>
-			<div class="content">
-				<p>TEST2</p>
-				<p class="view_article_button">この話題について叫びをみる</p>
-			</div>
-			</table>
+				</div>
+			<% end %>
+		<% end %>
 		</div>
 	<%end%>
 <%end%>

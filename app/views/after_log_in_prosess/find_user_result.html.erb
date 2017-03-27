@@ -1,6 +1,6 @@
 
 <%@users.each do |user_hash|%>
-  <p><%= link_to user_hash[:name], "find_user_detail/#{user_hash[:id]}"%></p>
+  <p><%= link_to user_hash[:name], "find_user_detail/#{user_hash[:id]}" %></p>
 <%end%>
 
 <%=link_to "戻る", :action => "find_user"%>
