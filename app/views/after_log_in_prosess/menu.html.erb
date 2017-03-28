@@ -121,7 +121,7 @@ $(document).on('page:load', ready);
 					<%= shout_list[:shout] %><br>
 					<%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%>
 					
-				    <br><br><%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
+				    <br><br><%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}" %>
 				    <br><br><br>
 				
 				    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
@@ -139,7 +139,7 @@ $(document).on('page:load', ready);
 				    <br><br>
 				    <div class="content">
 						<%@resp_shout.each do |resp_shout_list|%>
-							<%if resp_shout_list[:resp_shout] == shout_list[:id] %>
+							<%if resp_shout_list[:article_id] == shout_list[:article_id] %>
 								<div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
 									  	
 									<%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
@@ -153,8 +153,9 @@ $(document).on('page:load', ready);
 										    
 									<%= resp_shout_list[:shout] %><br>
 									<%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%>
-										
-									<br><br><%=link_to "返信する" ,"resp_shout/#{resp_shout_list[:id]}"%>
+									
+									<!-- 元の書き込みに対して返信する　 -->
+									<br><br><%=link_to "返信する" ,"resp_shout/#{resp_shout_list[:id]}" %>
 									<br><br><br>
 									
 									<%if LikeList.find_by(:shout_list_id => resp_shout_list[:id], :user_id => current_user.id)%>

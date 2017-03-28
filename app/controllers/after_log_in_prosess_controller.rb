@@ -83,12 +83,25 @@ class AfterLogInProsessController < ApplicationController
    @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :asc)
    @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil).order(created_at: :asc)
  end
-  
- #返信時のshoutを登録
+
+ #返信画面への遷移　resp_shout　返信の登録　register_resp
+ def resp_shout
+   #　【返信元】　@un_resp
+   # 該当する1件のshoutを取得
+   #　【返信先】 @resp_info
+   # オブジェクトを生成しておく
+   @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
+   @resp_info = ShoutList.new
+ end
  def register_resp
-    #:shout=返信内容、:user_id=返信者のuser_id, :resp_shout=返信対象となるshoutのid
+    #:shout 返信内容
+    #:user_id 返信者のuser_id
+    #:resp_shout 返信対象となるshout id
+    #:article_id 関連する記事 id
+    #:emotion_no 設定された感情
+    
     resp_shout = ShoutList.new(
-      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :emotion_no => resp[:emotion_no]
+      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :article_id => resp[:article_id], :emotion_no => resp[:emotion_no]
                             )
     #返信先のユーザー
     resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
@@ -133,12 +146,6 @@ class AfterLogInProsessController < ApplicationController
    )
    @folow=FollowList.where(:user_id => @user_info[:id])
    @follower = FollowList.where(:follow_id => @user_info[:id])
- end
-
-
- def resp_shout
-   @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
-   @resp_info = ShoutList.new
  end
 
  def watch_resp_shout
@@ -247,7 +254,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_shout_params
-    params.require(:shout_list).permit(:shout, :id, :emotion_no, :article_id, :user_id)
+    params.require(:shout_list).permit(:shout, :id, :emotion_no, :article_id, :user_id, :article_id)
   end
   
   def new_create_article

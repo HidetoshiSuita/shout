@@ -19,6 +19,7 @@
 	  
 	  <%=f.hidden_field :user_id ,:value => current_user.id %>
 	  <%=f.hidden_field :id, :value => @un_resp[:id] %>
+	  <%=f.hidden_field :article_id, :value => @un_resp[:article_id] %>
 	  <p><%=f.submit "返信する"%></p>
   <% end %>
 </div>
