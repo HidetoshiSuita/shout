@@ -50,6 +50,18 @@ $(document).on('page:load', ready);
 		<td><%= link_to "#{g.name}", :controller => "after_log_in_prosess", :action => "menu", genre_id: g.id %></td>
 	<% end %>
 </table>
+
+<div class="content">
+<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'update_my_genre_info'} do |f| %>
+	<table>
+		<% @genre.each do |g| %>
+			<td></td>
+		<% end %>
+	</table>
+	<%=f.submit "適用"%>
+<% end %>
+</div>
+
 <br>
 <!--new contents-->
 <div class="content">

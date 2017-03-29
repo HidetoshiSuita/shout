@@ -11,21 +11,51 @@ class AfterLogInProsessController < ApplicationController
    else
        @article = Article.all.order(created_at: :desc)
    end
-   
    @genre = Genre.all
    @article_info = Article.new
    @shout = ShoutList.new
-   
    @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
    @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
  
  def favorite
    #人気順
+   # Shoutlistからarticle_idの最大値を取得
+   cntmax = Shoutlist.maximum('id')
+   max_array = []
+   tmp = []
+   
+   # 順番にデータの取得をしていく。
+   [1..cntmax].each do |article_id|
+      tmp.clear
+      max_array = ShoutList.where("article_id = #{article_id}").count()
+      tmp << article_id
+      tmp << max_array
+   end
+   max_array = tmp.sort_by{|max|
+     tmp = max[][1]
+   }
+   puts max_array
+   
  end
  
  def my_genre
    #ジャンル別
+   #@genre=>ジャンル　@article=>話題提供
+   @genre = User.select(:genre_id).where("genre_id=#{current_user.id}")
+   @genre_id = User.select(:genre_id).where("genre_id=#{current_user.id}").first
+   
+   if !params[:genre_id].nil?
+       @genre_id = params[:genre_id]
+       @article = Article.where("genre_id = #{@genre_id}").order(created_at: :desc)
+   else
+       @article = Article.all.order(created_at: :desc)
+   end
+   
+   @article_info = Article.new
+   @shout = ShoutList.new
+   @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
  
  def new_article_action
@@ -81,7 +111,7 @@ class AfterLogInProsessController < ApplicationController
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
    @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :asc)
-   @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil).order(created_at: :desc)
  end
 
  #返信画面への遷移　resp_shout　返信の登録　register_resp
@@ -99,20 +129,20 @@ class AfterLogInProsessController < ApplicationController
     #:resp_shout 返信対象となるshout id
     #:article_id 関連する記事 id
     #:emotion_no 設定された感情
-    
     resp_shout = ShoutList.new(
-      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :article_id => resp[:article_id], :emotion_no => resp[:emotion_no]
+      :shout => resp[:shout], :user_id => resp[:user_id], :resp_shout => resp[:id], :shout_verify => resp[:shout_verify], :article_id => resp[:article_id], :emotion_no => resp[:emotion_no]
                             )
     #返信先のユーザー
     resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
 
     if resp_shout.save
-      PostMailer.resp_email(
-      User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
+      #PostMailer.resp_email(
+      #User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
     end
     
     redirect_to :action => "menu"
  end
+ 
  
  #---------------------------------------------------------------
  
@@ -242,7 +272,7 @@ class AfterLogInProsessController < ApplicationController
   private
 
   def resp
-    params.require(:shout_list).permit(:shout, :user_id, :id, :emotion_no, :reply_to )
+    params.require(:shout_list).permit(:shout, :user_id, :id, :emotion_no, :article_id, :shout_verify )
   end
 
   def user_id
@@ -254,7 +284,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
   def update_shout_params
-    params.require(:shout_list).permit(:shout, :id, :emotion_no, :article_id, :user_id, :article_id)
+    params.require(:shout_list).permit(:shout, :id, :emotion_no, :article_id, :user_id, :shout_verify)
   end
   
   def new_create_article

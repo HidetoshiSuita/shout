@@ -11,8 +11,10 @@ Rails.application.routes.draw do
   get 'articles/articles_menu' => 'articles#articles_menu'
   get 'admin/admin_menu' => 'admin#admin_menu'
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
+  get 'after_log_in_prosess/my_genre' =>'after_log_in_prosess#my_genre'
   post 'after_log_in_prosess/new_article_action' => 'after_log_in_prosess#new_article_action'
-  post 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'  
+  post 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'
+  post 'after_log_in_prosess/update_my_genre_info' =>  'after_log_in_prosess#update_my_genre_info'
   root to: "after_log_in_prosess#menu"
   
 

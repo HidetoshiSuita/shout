@@ -1,6 +1,6 @@
 class ShoutList < ApplicationRecord
  has_many :like_lists, dependent: :destroy
- belongs_to :article
+ has_many :articles
  
   def create_shout_list(contents, usr_id)
     ShoutList.create(

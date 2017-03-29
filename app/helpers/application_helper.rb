@@ -16,5 +16,5 @@ module ApplicationHelper
     end
     return arr
   end
-  
+ 
 end
