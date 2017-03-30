@@ -151,7 +151,6 @@ class AfterLogInProsessController < ApplicationController
  
  def icon
     emotion_no = params[:id]
-    puts emotion_no
     img = File.open("public/img/icon/#{emotion_no}.png", "r+b")
     bin = img.read
     img.close
@@ -252,6 +251,15 @@ class AfterLogInProsessController < ApplicationController
     end
     
     if user.update(name:info[:name], introduction:info[:introduction], img:user.img, img_content:user.img_content )
+
+      #中間テーブルの情報書き換え
+      unless params[:genre_id].nil?
+        params[:genre][:id].each do |g|
+          @usergenre = UserGenre.new(user_id: params[:id], genre_id: g)
+          @usergenre.save
+        end
+      end
+
       flash[:update_my_info] = '変更しました。反映まで時間がかかる場合があります'
     else
       flash[:update_my_info] ='反映できませんでいした。もう一度お願いします。'
