@@ -12,8 +12,9 @@
   
   <table>
   <% Genre.all.each do |genre| %>
-	<td><%= check_box_tag 'genre[genre_id][]', genre.id,  @user_info.genres.include?(genre.id), :genre_id => "genre_#{genre.id}" %>
+	<td><%= check_box_tag 'genre[genre_id][]', genre.id,  @user_info.genres.ids.include?(genre.id), :genre_id => "genre_#{genre.id}" %>
 	<%= genre.name %></td>
+	<% puts @user_info.genres.include?(genre.id) %>
   <% end %>
   </table>
   

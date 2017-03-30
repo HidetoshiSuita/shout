@@ -3,4 +3,8 @@ module AfterLogInProsessHelper
     info=ShoutList.find_by(:id => id)
     info
   end
+  def find_genre_name(genre_id)
+    genre = Genre.find_by(:id => genre_id)
+    genre
+  end
 end

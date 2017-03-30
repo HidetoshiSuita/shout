@@ -42,22 +42,21 @@ class AfterLogInProsessController < ApplicationController
  def my_genre
    #ジャンル別
    #@genre=>ジャンル　@article=>話題提供
-   @genre = User.select(:genre_id).where("genre_id=#{current_user.id}")
-   @genre_id = User.select(:genre_id).where("genre_id=#{current_user.id}").first
-   
+   @user_info = User.find_by(:id => current_user.id)
+   @genre = UserGenre.select(:genre_id).where("user_id=#{current_user.id}")
+   @genre_id = UserGenre.select(:genre_id).where("user_id=#{current_user.id}").first
+      
    if !params[:genre_id].nil?
        @genre_id = params[:genre_id]
-       @article = Article.where("genre_id = #{@genre_id}").order(created_at: :desc)
-   else
-       @article = Article.all.order(created_at: :desc)
    end
    
+   @article = Article.where("genre_id = #{@genre_id.genre_id}").order(created_at: :desc)
    @article_info = Article.new
    @shout = ShoutList.new
    @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
    @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
- 
+  
  def new_article_action
    @article_info = Article.new(new_create_article)
    
@@ -251,11 +250,11 @@ class AfterLogInProsessController < ApplicationController
     end
     
     if user.update(name:info[:name], introduction:info[:introduction], img:user.img, img_content:user.img_content )
-
+      
       #中間テーブルの情報書き換え
-      unless params[:genre_id].nil?
-        params[:genre][:id].each do |g|
-          @usergenre = UserGenre.new(user_id: params[:id], genre_id: g)
+      unless params[:genre].nil?
+        params[:genre][:genre_id].each do |g|
+          @usergenre = UserGenre.new(user_id: info[:id], genre_id: g)
           @usergenre.save
         end
       end

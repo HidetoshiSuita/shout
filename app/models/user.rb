@@ -8,8 +8,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 50 }
   
-  has_many :genres
   has_many :user_genres
+  has_many :genres, through: :user_genres
   has_many :articles
 
 end
