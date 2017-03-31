@@ -56,7 +56,18 @@ class AfterLogInProsessController < ApplicationController
    @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
    @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
-  
+
+  def update_my_genre_info
+    unless params[:genre].nil?
+      UserGenre.delete_all(user_id: current_user.id)
+      params[:genre][:genre_id].each do |g|
+        @usergenre = UserGenre.new(user_id: current_user.id, genre_id: g)
+        @usergenre.save
+      end
+    end
+    redirect_to :action => "my_genre"
+  end
+
  def new_article_action
    @article_info = Article.new(new_create_article)
    
@@ -135,8 +146,8 @@ class AfterLogInProsessController < ApplicationController
     resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
 
     if resp_shout.save
-      #PostMailer.resp_email(
-      #User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
+      PostMailer.resp_email(
+      User.find_by(:id =>current_user.id), User.find_by(:id => resp_user_shout[:user_id])).deliver
     end
     
     redirect_to :action => "menu"
@@ -253,6 +264,7 @@ class AfterLogInProsessController < ApplicationController
       
       #中間テーブルの情報書き換え
       unless params[:genre].nil?
+        UserGenre.delete_all(user_id: info[:id])
         params[:genre][:genre_id].each do |g|
           @usergenre = UserGenre.new(user_id: info[:id], genre_id: g)
           @usergenre.save
