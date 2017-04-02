@@ -1,6 +1,6 @@
 <%=form_for @result, :url => {:controller => 'after_log_in_prosess' ,:action => 'update_shout'} do |f|%>
   <%=f.label '変更してください'%>
-  <%=f.text_area :shout ,value:@shout[:shout]%>
+  <%=f.text_area :shout ,value:@shout[:shout], :size=>"80x10"%>
   <div class="field">
 	<table>
 		<% icon_list.each_with_index do |icon, index| %>

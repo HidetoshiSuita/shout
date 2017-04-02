@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   post 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'
   post 'after_log_in_prosess/update_my_genre_info' =>  'after_log_in_prosess#update_my_genre_info'
   root to: "after_log_in_prosess#menu"
+  get 'after_log_in_prosess/edit_article_action/:id' => 'after_log_in_prosess#edit_article_action'
+  post 'after_log_in_prosess/update_article_action' => 'after_log_in_prosess#update_article_action'
+  get 'after_log_in_prosess/article_detail/:id' => 'after_log_in_prosess#article_detail'
   
 
 

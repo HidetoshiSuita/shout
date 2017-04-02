@@ -5,6 +5,6 @@ module AfterLogInProsessHelper
   end
   def find_genre_name(genre_id)
     genre = Genre.find_by(:id => genre_id)
-    genre
+    genre.name
   end
 end

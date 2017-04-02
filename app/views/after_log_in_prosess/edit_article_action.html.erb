@@ -1,0 +1,22 @@
+<br>
+	<%= form_for @result, :url => {:controller => 'after_log_in_prosess', :action => 'update_article_action'} do |f| %>
+	  <%=f.label "タイトル"%>
+	  <%= f.text_field :title, value:@article[:title], :size=>"80" %>
+	  <br><br>
+	  <%=f.label "埋め込みタグ"%>
+	  <%= f.text_field :tag, value:@article[:tag], :size=>"80" %>
+	  <br><br>
+	  <%=f.label "ジャンル"%>
+	  <%= f.collection_select :genre_id, Genre.all, :id, :name, :selected => @article.genre_id  %>
+	  <br><br>
+	  <%=f.label "コメント"%>
+	  <%= f.text_area :comment, value:@article[:comment], :size=>"80x20" %>
+	  <br><br>
+	  <%=f.label "画像"%>
+	  <%= f.file_field  :img %>
+	  <br><br>
+	  <%= f.hidden_field :user_id, :value => current_user.id %>
+	  <%= f.hidden_field :id, :value => @article[:id] %>
+	  <br><br>
+	  <%=f.submit "更新する"%>
+	<%end%>

@@ -4,10 +4,10 @@
   <%= f.file_field  :img %>
   <br><br>
   <%=f.label "名前"%>
-  <%= f.text_field :name, value:@user_info[:name]%>
+  <%= f.text_field :name, value:@user_info[:name], :size=>"80"%>
   <br><br>
   <%=f.label "紹介文"%>
-  <%=f.text_area :introduction, value:@user_info[:introduction]%>
+  <%=f.text_area :introduction, value:@user_info[:introduction], :size=>"80x10"%>
   <br><br>
   
   <table>

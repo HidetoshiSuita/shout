@@ -12,6 +12,7 @@
 <h5><%=link_to "プロフィールの設定", :controller => "after_log_in_prosess", :action => "update_my_info", :id => current_user.id%></h5>
 <%@shout.each do |shout|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+  	<h2><%= link_to "#{shout.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout.article.id %>にてShout!</h2><br>
   	<%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
     <%=find_user_name shout[:user_id]%></p>
     <%= image_tag(after_log_in_prosess_icon_path(:id=>shout[:emotion_no]))%>&emsp;<%= shout[:shout]%><br>

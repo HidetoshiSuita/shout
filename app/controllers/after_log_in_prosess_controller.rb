@@ -44,13 +44,14 @@ class AfterLogInProsessController < ApplicationController
    #@genre=>ジャンル　@article=>話題提供
    @user_info = User.find_by(:id => current_user.id)
    @genre = UserGenre.select(:genre_id).where("user_id=#{current_user.id}")
-   @genre_id = UserGenre.select(:genre_id).where("user_id=#{current_user.id}").first
-      
+   
    if !params[:genre_id].nil?
        @genre_id = params[:genre_id]
+       @article = Article.where("genre_id = #{@genre_id}").order(created_at: :desc)
+   else
+       @article = Article.where(genre_id:@genre).order(created_at: :desc)
    end
    
-   @article = Article.where("genre_id = #{@genre_id.genre_id}").order(created_at: :desc)
    @article_info = Article.new
    @shout = ShoutList.new
    @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
@@ -58,8 +59,8 @@ class AfterLogInProsessController < ApplicationController
  end
 
   def update_my_genre_info
+    UserGenre.delete_all(user_id: current_user.id)
     unless params[:genre].nil?
-      UserGenre.delete_all(user_id: current_user.id)
       params[:genre][:genre_id].each do |g|
         @usergenre = UserGenre.new(user_id: current_user.id, genre_id: g)
         @usergenre.save
@@ -84,8 +85,27 @@ class AfterLogInProsessController < ApplicationController
  
  # edit_article_action 変更画面への遷移　update_article_action　変更画面での決定押下時の動作
  def edit_article_action
+   @article = Article.find_by(:id => params[:id] ) 
+   @result = Article.new
  end
  def update_article_action
+   article = Article.new(new_create_article)
+   
+   info = Article.find_by(:id => article[:id] )
+   if info.update(
+     :title => article[:title], :tag => article[:tag], :comment => article[:comment], :img => article[:img], :genre_id => article[:genre_id]
+      )
+     flash[:update_article_result] = '更新しました'
+   else
+     flash[:update_article_result] = '更新できませんでした。もう一度お願いします。'
+   end
+   redirect_to :action => "menu"
+ end
+ 
+ def article_detail
+   @article = Article.find_by(:id => params[:id] )
+   @shout_list = ShoutList.where(article_id: params[:id]).where(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where(article_id: params[:id]).where.not(resp_shout: nil).order(created_at: :asc)
  end
  
  # remake_shout 変更画面への遷移　update_shout　変更画面での決定押下時の動作
@@ -103,7 +123,6 @@ class AfterLogInProsessController < ApplicationController
    end
    redirect_to :action => "watch_shout"
  end
- 
  
  def shout
    @shout = ShoutList.new(update_shout_params)
@@ -307,7 +326,7 @@ class AfterLogInProsessController < ApplicationController
   end
   
   def new_create_article
-    params.require(:article).permit(:title, :tag, :comment, :img, :genre_id, :user_id)
+    params.require(:article).permit(:id, :title, :tag, :comment, :img, :genre_id, :user_id)
   end
   
 

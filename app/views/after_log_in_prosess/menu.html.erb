@@ -92,7 +92,7 @@ $(document).on('page:load', ready);
 			  	<%= art[:img] %><br>
 				<%= art[:comment] %><br><br>
 				<% if current_user.id == art[:user_id] %>
-					<%= link_to "この話題の編集"%><br><br>
+					<%= link_to "この話題の編集", "/after_log_in_prosess/edit_article_action/#{art[:id]}" %><br><br>
 				<% end %>
 				<%= "#{art.created_at.strftime("%Y-%m-%d %H:%M")}"%>に<%= link_to "#{art.user.name}" ,"find_user_detail/#{art.user_id}"%>によって作成。<br><br>
 			</div>
