@@ -12,9 +12,6 @@
 	  <%=f.label "コメント"%>
 	  <%= f.text_area :comment, value:@article[:comment], :size=>"80x20" %>
 	  <br><br>
-	  <% if !art[:img].nil? %>
-		<%= image_tag(after_log_in_prosess_show_article_img_path(:id=>@article[:id]), :size => "300x200") %><br>
-	  <% end %>
 	  <%=f.label "画像"%>
 	  <%= f.file_field  :img %>
 	  <br><br>
