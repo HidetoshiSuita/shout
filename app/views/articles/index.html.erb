@@ -18,9 +18,7 @@
     <% @articles.each do |article| %>
       <tr>
         <td><%= article.title %></td>
-        <%if !article.tag.nil? %>
-        	<td><%= article.tag.html_safe %></td>
-        <% end %>
+        <td><%= article.tag %></td>
         <td><%= article.comment %></td>
         <td><%= article.img %></td>
         <td><%= article.genre_id %></td>
