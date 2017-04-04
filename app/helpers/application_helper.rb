@@ -14,7 +14,7 @@ module ApplicationHelper
     Dir.glob(Rails.root.join('public/img/icon/*')) do |f|
       arr << f.sub(/.*public/, '')
     end
-    return arr
+    return arr.sort
   end
  
 end
