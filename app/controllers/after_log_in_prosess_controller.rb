@@ -121,7 +121,7 @@ class AfterLogInProsessController < ApplicationController
    else
      flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'
    end
-   redirect_to :action => "watch_shout"
+   redirect_to :action => "menu"
  end
  
  def shout
