@@ -2,8 +2,7 @@
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
   <p><%= image_tag(after_log_in_prosess_show_img_path(:id=>@un_resp[:user_id]), :size => "100x100") %></p>
   <p><%= link_to "#{find_user_name(@un_resp[:user_id])}" ,"../find_user_detail/#{@un_resp.user_id}"%></p>
-  <h3><%=simple_format(@un_resp[:shout])%></h3>
-  <p><%= image_tag(after_log_in_prosess_icon_path(:id=>@un_resp[:emotion_no]))%></p>
+  <% if !@un_resp[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>@un_resp[:emotion_no]))%><% end %>&emsp;<h3><%= @un_resp[:shout]%></h3>
 </div>
 
 <div class = "resp_field">

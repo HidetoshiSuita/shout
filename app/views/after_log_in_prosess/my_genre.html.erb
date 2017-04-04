@@ -135,7 +135,7 @@ $(document).on('page:load', ready);
 				    <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
 					<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"find_user_detail/#{shout_list.user_id}"%><br><br><br>
 					    
-					<%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><%= simple_format(shout_list[:shout]) %><br>
+					<% !shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><% end %>&emsp;<%= shout_list[:shout] %><br>
 					
 				    <br><br><%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{shout_list[:id]}" %>
 				    <br><br><br>
@@ -155,7 +155,7 @@ $(document).on('page:load', ready);
 				    <br><br>
 				    <div class="content">
 						<%@resp_shout.each do |resp_shout_list|%>
-							<% if resp_shout_list[:shout_verify] == shout_list[:shout_verify] %>
+							<% if resp_shout_list[:shout_verify] == shout_list[:shout_verify] && resp_shout_list[:article_id] == shout_list[:article_id] %>
 								<div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
 									  	
 									<%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
@@ -167,7 +167,8 @@ $(document).on('page:load', ready);
 									<%= image_tag(after_log_in_prosess_show_img_path(:id=>resp_shout_list[:user_id]), :size => "100x100") %><br>
 									<%=find_user_name resp_shout_list[:user_id]%><br><br><br>
 										    
-									<%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%><%= simple_format(resp_shout_list[:shout]) %><br>
+									<% if resp_shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%><% end %>&emsp;<%= resp_shout_list[:shout] %><br>
+									
 									
 									<!-- 元の書き込みに対して返信する　 -->
 									<br><br><%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{resp_shout_list[:id]} " %>

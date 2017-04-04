@@ -5,6 +5,7 @@ class RegistrationsController < Devise::RegistrationsController
         
     hash[:img] = img.read
     hash[:img_content] = "image/png"
+    hash[:user_available] = true
     super
   end
  

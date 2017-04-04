@@ -1,7 +1,5 @@
-<p><%=flash[:resp_result]%></p>
-
 <h3><%= link_to "ジャンルマスタ", :controller => "genres", :action => "index" %></h3>
 <br>
-<h3><%=link_to 'ユーザ管理' %></h3>
+<h3><%=link_to 'ユーザ管理', :controller => "admin", :action => "admin_user"%></h3>
 <br>
-<h3><%=link_to '話題管理' %></h3>
+<h3><%=link_to '話題管理', :controller => "articles", :action => "index" %></h3>

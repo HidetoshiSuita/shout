@@ -14,5 +14,6 @@ Genre.create(:id => 4, :name => 'ニュース')
 Genre.create(:id => 5, :name => 'その他')
 
 User.delete_all
-User.create(:id => 1, :email => 'afa3c2rgsg@i.softbank.jp', :name => 'ティモチー', :password => 'Hawksfan815', :password_confirmation => 'Hawksfan815' )
-User.create(:id => 2, :email => 'ucckc061506@yahoo.co.jp', :name => 't-tsukamoto', :password => 'taka0615', :password_confirmation => 'taka0615')
+img = File.open("public/img/init_img.png", "r+b")
+User.create(:id => 1, :email => 'afa3c2rgsg@i.softbank.jp', :name => 'ティモチー', :password => 'Hawksfan815', :password_confirmation => 'Hawksfan815', :img => img.read, :img_content => "image/png", :user_available => true)
+User.create(:id => 2, :email => 'ucckc061506@yahoo.co.jp', :name => 't-tsukamoto', :password => 'taka0615', :password_confirmation => 'taka0615', :img => img.read, :img_content => "image/png", :user_available => true)

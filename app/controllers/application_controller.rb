@@ -8,15 +8,6 @@ class ApplicationController < ActionController::Base
        redirect_to '/users/sign_in'
     end
   end
-  
-  # 以下を追加
-  before_filter :auth
-  private
-  def auth
-    authenticate_or_request_with_http_basic do |user,pass|
-      user == 'admin' && pass == 'shoutTest9876'
-    end
-  end
 
  protected
  def configure_permitted_parameters

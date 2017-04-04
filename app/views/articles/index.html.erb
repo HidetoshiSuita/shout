@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Articles</h1>
+<h1>話題マスタ</h1>
 
 <table>
   <thead>
@@ -18,7 +18,9 @@
     <% @articles.each do |article| %>
       <tr>
         <td><%= article.title %></td>
-        <td><%= article.tag %></td>
+        <%if !article.tag.nil? %>
+        	<td><%= article.tag.html_safe %></td>
+        <% end %>
         <td><%= article.comment %></td>
         <td><%= article.img %></td>
         <td><%= article.genre_id %></td>
@@ -32,4 +34,5 @@
 
 <br>
 
-<%= link_to 'New Article', new_article_path %>
+<%= link_to 'New Article', new_article_path %><br><br><br>
+<%= link_to 'Admin', :controller => 'admin', :action => 'admin_menu' %>

@@ -61,7 +61,7 @@ $(document).on('page:load', ready);
 				    <br><br>
 				    <div class="content">
 						<%@resp_shout.each do |resp_shout_list|%>
-							<% if resp_shout_list[:shout_verify] == shout_list[:shout_verify] %>
+							<% if resp_shout_list[:shout_verify] == shout_list[:shout_verify] && resp_shout_list[:article_id] == shout_list[:article_id] %>
 								<div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
 									  	
 									<%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>

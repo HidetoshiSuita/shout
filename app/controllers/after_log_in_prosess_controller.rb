@@ -300,12 +300,19 @@ class AfterLogInProsessController < ApplicationController
 
   def destoroy_shout
     shout=ShoutList.find_by(:id => params[:id])
+    
+    #　元のshoutを消した場合、返信したshoutが残っていたので発生
+    if shout.resp_shout.nil?
+      delete_shout = ShoutList.where(:shout_verify => shout.shout_verify )
+      delete_shout.destroy_all
+    end
+    
     if shout.destroy
       flash[:destroy_shout_result] = '削除しました。'
     else
       flash[:destroy_shout_result] = '削除できませんでした。もう一度お願いします。'
     end
-    redirect_to :action => "watch_shout"
+    redirect_to :action => "menu"
   end
   private
 
@@ -329,5 +336,4 @@ class AfterLogInProsessController < ApplicationController
     params.require(:article).permit(:id, :title, :tag, :comment, :img, :genre_id, :user_id)
   end
   
-
 end
