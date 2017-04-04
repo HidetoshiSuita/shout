@@ -58,8 +58,7 @@ $(document).on('page:load', ready);
 			    <%= image_tag(after_log_in_prosess_show_img_path(:id=>resp_shout_list[:user_id]), :size => "100x100") %><br>
 				<%=find_user_name resp_shout_list[:user_id]%><br><br><br>
 				    
-				<%= resp_shout_list[:shout] %><br>
-				<%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%>
+				<%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%><%= simple_format(resp_shout_list[:shout]) %><br>
 				
 			    <br><br><%=link_to "返信する" ,"resp_shout/#{resp_shout_list[:id]}"%>
 			    <br><br><br>

@@ -15,7 +15,7 @@
   	<h2><%= link_to "#{shout.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout.article.id %>にてShout!</h2><br>
   	<%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
     <%=find_user_name shout[:user_id]%></p>
-    <%= image_tag(after_log_in_prosess_icon_path(:id=>shout[:emotion_no]))%>&emsp;<%= shout[:shout]%><br>
+    <%= image_tag(after_log_in_prosess_icon_path(:id=>shout[:emotion_no]))%><%= simple_format(shout[:shout])%><br>
     
   </div>
 <%end%>
