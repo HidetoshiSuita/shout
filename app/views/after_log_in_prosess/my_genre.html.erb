@@ -104,7 +104,7 @@ $(document).on('page:load', ready);
 			  		</div>
 			  	<% end %>
 			  	<% if !art[:img].nil? %>
-			  		<%= image_tag(after_log_in_prosess_show_article_img_path(:id=>art[:id]), :size => "100x100") %><br>
+			  		<%= image_tag(after_log_in_prosess_show_article_img_path(:id=>art[:id]), :size => "300x200") %><br>
 				<% end %>
 				<%= art[:comment] %><br><br>
 				<% if current_user.id == art[:user_id] %>
@@ -137,7 +137,7 @@ $(document).on('page:load', ready);
 				    <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
 					<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"find_user_detail/#{shout_list.user_id}"%><br><br><br>
 					    
-					<% !shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><% end %>&emsp;<%= shout_list[:shout] %><br>
+					<% if !shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><% end %>&emsp;<%= shout_list[:shout] %><br>
 					
 				    <br><br><%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{shout_list[:id]}" %>
 				    <br><br><br>

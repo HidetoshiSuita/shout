@@ -1,4 +1,5 @@
 <script>
+$(function () {
     $('.shout_list_button').prevAll().hide();
     $('.shout_list_button').click(function () {
         if ($(this).prevAll().is(':hidden')) {
@@ -9,98 +10,98 @@
             $(this).text('返信を見る').removeClass('close');
         }
     });
-
+});
 $(document).ready(ready);
 $(document).on('page:load', ready);
 </script>
 
 <!--contents-->
 <h1>話題詳細</h1>
-	<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-		  	<div class="content">
-			  	<h2><%= @article.title %></h2>
-			  	<% if !@article.tag.nil? %>
-			  		<div id = "iframe">
-			  			<%= @article.tag.html_safe %><br><br>
-			  		</div>
-			  	<% end %>
-			  	<% if !@article.img.nil? %>
-			  		<%= image_tag(after_log_in_prosess_show_article_img_path(:id=>@article.id), :size => "100x100") %><br>
-				<% end %>
-				<%= @article.comment %><br><br>
-				<% if current_user.id == @article.user_id %>
-					<%= link_to "この話題の編集", "/after_log_in_prosess/edit_article_action/#{@article.id}" %><br><br>
-				<% end %>
-				<%= "#{@article.created_at.strftime("%Y-%m-%d %H:%M")}"%>に<%= link_to "#{@article.user.name}" ,"../find_user_detail/#{@article.user_id}"%>によって作成。<br><br>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+	<div class="content">
+		<h2><%= @article.title %></h2>
+		<% if !@article.tag.nil? %>
+			<div id = "iframe">
+				<%= @article.tag.html_safe %><br><br>
 			</div>
-			<br><br>		
-		<!-- belongs to article, shout list -->
-		<% @shout_list.each do |shout_list| %>
-			<%if shout_list[:article_id] == @article.id %>
-				<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-	    	
-				    <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
-					<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"find_user_detail/#{shout_list.user_id}"%><br><br><br>
-					    
-					<%= shout_list[:shout] %><br>
-					<%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%>
-					
-				    <br><br><%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{shout_list[:id]}" %>
-				    <br><br><br>
-				
-				    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
-				      <%=button_to "イイネ済み", "../destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
-				    <%else%>
-				      <%=button_to "イイネ", "../make_like/#{current_user.id}/#{shout_list[:id]}"%>
-				    <%end%>
-				    
-				    <%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイネ
-				    <br><br>
-				
-				    <%if current_user.id == shout_list[:user_id]%>
-				      <%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
-				    <%end%>
-				    <br><br>
-				    <div class="content">
-						<%@resp_shout.each do |resp_shout_list|%>
-							<% if resp_shout_list[:shout_verify] == shout_list[:shout_verify] && resp_shout_list[:article_id] == shout_list[:article_id] %>
-								<div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
-									  	
-									<%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
-									<%if resp_user %>
-							      		<%result=User.find_by(:id => resp_user[:user_id])%>
-							      		<%="#{result[:name]}さんへの返信"%><br><br>
-							    	<%end%>
-							    		
-									<%= image_tag(after_log_in_prosess_show_img_path(:id=>resp_shout_list[:user_id]), :size => "100x100") %><br>
-									<%=find_user_name resp_shout_list[:user_id]%><br><br><br>
-										    
-									<%= resp_shout_list[:shout] %><br>
-									<%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%>
-									
-									<!-- 元の書き込みに対して返信する　 -->
-									<br><br><%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{resp_shout_list[:id]} " %>
-									<br><br><br>
-									
-									<%if LikeList.find_by(:shout_list_id => resp_shout_list[:id], :user_id => current_user.id)%>
-										<%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{resp_shout_list[:id]}"%> 
-									<%else%>
-										<%=button_to "イイネ", "make_like/#{current_user.id}/#{resp_shout_list[:id]}"%>
-									<%end%>
-									    
-									<%=LikeList.where(:shout_list_id => resp_shout_list[:id]).size%>イイネ
-									<br><br>
-									<%if current_user.id == resp_shout_list[:user_id]%>
-										<%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => resp_shout_list[:id]%>
-									<%end%>									
-								</div>
-							<% end %>
-						<% end %>
-						<%if how_many_resp=ShoutList.find_by(:resp_shout => shout_list[:id]) %>
-							<div class="shout_list_button">返信を見る</div>
-						<% end %>
-					</div>
-				</div>
-			<% end %>
 		<% end %>
+		<% if !@article.img.nil? %>
+			<%= image_tag(after_log_in_prosess_show_article_img_path(:id=>@article.id), :size => "300x200") %><br>
+		<% end %>
+		<%= @article.comment %><br><br>
+		<% if current_user.id == @article.user_id %>
+			<%= link_to "この話題の編集", "/after_log_in_prosess/edit_article_action/#{@article.id}" %><br><br>
+		<% end %>
+		<%= "#{@article.created_at.strftime("%Y-%m-%d %H:%M")}"%>に<%= link_to "#{@article.user.name}" ,"../find_user_detail/#{@article.user_id}"%>によって作成。<br><br>
 	</div>
+	<br><br>		
+	<!-- belongs to article, shout list -->
+	<% @shout_list.each do |shout_list| %>
+		<%if shout_list[:article_id] == @article.id %>
+			<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+				
+				<%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
+				<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"find_user_detail/#{shout_list.user_id}"%><br><br><br>
+				    
+				<% if !shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><% end %>&emsp;<%= shout_list[:shout] %><br>
+				
+			    <br><br>
+			    <%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{shout_list[:id]}" %>
+			    <br><br><br>
+			
+			    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
+					<%=button_to "イイネ済み", "../destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
+				<%else%>
+					<%=button_to "イイネ", "../make_like/#{current_user.id}/#{shout_list[:id]}"%>
+			    <%end%>
+			    
+				<%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイネ
+			    <br><br>
+			
+				<%if current_user.id == shout_list[:user_id]%>
+					<%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
+				<%end%>
+			    <br><br>
+			    
+			    <div class="content">
+					<%@resp_shout.each do |resp_shout_list|%>
+						<% if resp_shout_list[:shout_verify] == shout_list[:shout_verify] && resp_shout_list[:article_id] == shout_list[:article_id] %>
+							<div style="padding: 10px; margin-bottom: 10px; margin-top: 10px; border: 1px solid #333333; border-radius: 10px;">
+								  	
+								<%resp_user = ShoutList.find_by(:id => resp_shout_list[:resp_shout])%>
+								<%if resp_user %>
+						      		<%result=User.find_by(:id => resp_user[:user_id])%>
+						      		<%="#{result[:name]}さんへの返信"%><br><br>
+						    	<%end%>
+						    		
+								<%= image_tag(after_log_in_prosess_show_img_path(:id=>resp_shout_list[:user_id]), :size => "100x100") %><br>
+								<%=find_user_name resp_shout_list[:user_id]%><br><br><br>
+								
+								<% if !resp_shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%><%end%>&emsp;<%= resp_shout_list[:shout] %><br>
+								
+								<!-- 元の書き込みに対して返信する　 -->
+								<br><br><%=link_to "返信する" , "/after_log_in_prosess/resp_shout/#{resp_shout_list[:id]} " %>
+								<br><br><br>
+								
+								<%if LikeList.find_by(:shout_list_id => resp_shout_list[:id], :user_id => current_user.id)%>
+									<%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{resp_shout_list[:id]}"%> 
+								<%else%>
+									<%=button_to "イイネ", "make_like/#{current_user.id}/#{resp_shout_list[:id]}"%>
+								<%end%>
+								    
+								<%=LikeList.where(:shout_list_id => resp_shout_list[:id]).size%>イイネ
+								<br><br>
+								<%if current_user.id == resp_shout_list[:user_id]%>
+									<%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => resp_shout_list[:id]%>
+								<%end%>									
+							</div>
+						<% end %>
+					<% end %>
+					<%if ShoutList.find_by(:resp_shout => shout_list[:id]) %>
+						<div class="shout_list_button">返信を見る</div>
+					<% end %>
+				</div>
+			</div>
+		<% end %>
+	<% end %>
+</div>
