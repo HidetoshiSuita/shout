@@ -140,7 +140,7 @@ class AfterLogInProsessController < ApplicationController
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
    @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :asc)
-   @resp_shout = ShoutList.where(:user_id => follow_list).where.not(resp_shout: nil).order(created_at: :desc)
+   @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :desc)
  end
 
  #返信画面への遷移　resp_shout　返信の登録　register_resp

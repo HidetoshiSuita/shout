@@ -11,8 +11,7 @@ Genre.create(:id => 1, :name => 'エンタメ・趣味')
 Genre.create(:id => 2, :name => 'スポーツ')
 Genre.create(:id => 3, :name => '恋愛・結婚')
 Genre.create(:id => 4, :name => 'ニュース')
-Genre.create(:id => 5, :name => '美容・ファッション')
-Genre.create(:id => 6, :name => 'その他')
+Genre.create(:id => 5, :name => 'その他')
 
 User.delete_all
 User.create(:id => 1, :email => 'afa3c2rgsg@i.softbank.jp', :name => 'ティモチー', :password => 'Hawksfan815', :password_confirmation => 'Hawksfan815' )
