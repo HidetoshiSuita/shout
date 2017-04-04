@@ -24,7 +24,9 @@ Rails.application.routes.draw do
   get 'after_log_in_prosess/edit_article_action/:id' => 'after_log_in_prosess#edit_article_action'
   post 'after_log_in_prosess/update_article_action' => 'after_log_in_prosess#update_article_action'
   get 'after_log_in_prosess/article_detail/:id' => 'after_log_in_prosess#article_detail'
-  
+  get "/after_log_in_prosess/show_img" => 'after_log_in_prosess#show_img'
+  get "/after_log_in_prosess/icon" => 'after_log_in_prosess#icon'
+  get "/after_log_in_prosess/show_article_img" => 'after_log_in_prosess#show_article_img'
 
   get 'after_log_in_prosess/chose' =>'after_log_in_prosess#chose'
 
@@ -58,9 +60,6 @@ Rails.application.routes.draw do
 
   get "/after_log_in_prosess/watch_my_info/:id" => 'after_log_in_prosess#watch_my_info'
   
-  get "/after_log_in_prosess/show_img" => 'after_log_in_prosess#show_img'
-  
-  get "/after_log_in_prosess/icon" => 'after_log_in_prosess#icon'
 
   get '/after_log_in_prosess/watch_follow_user/:id' => 'after_log_in_prosess#watch_follow_user'
 

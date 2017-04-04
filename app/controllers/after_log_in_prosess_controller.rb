@@ -72,6 +72,11 @@ class AfterLogInProsessController < ApplicationController
  def new_article_action
    @article_info = Article.new(new_create_article)
    
+   if !params[:article][:img].nil?
+      @article_info.img = params[:article][:img].read
+      @article_info.img_content = params[:article][:img].content_type
+   end
+   
    respond_to do |format|
      if @article_info.save
        format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.' }
@@ -90,10 +95,15 @@ class AfterLogInProsessController < ApplicationController
  end
  def update_article_action
    article = Article.new(new_create_article)
-   
    info = Article.find_by(:id => article[:id] )
+   
+   if !params[:article][:img].nil?
+      article.img = params[:article][:img].read
+      article.img_content = params[:article][:img].content_type
+   end
+   
    if info.update(
-     :title => article[:title], :tag => article[:tag], :comment => article[:comment], :img => article[:img], :genre_id => article[:genre_id]
+     :title => article[:title], :tag => article[:tag], :comment => article[:comment], :img => article[:img], :genre_id => article[:genre_id] , :img =>article[:img], :img_content =>article[:img_content]
       )
      flash[:update_article_result] = '更新しました'
    else
@@ -116,7 +126,8 @@ class AfterLogInProsessController < ApplicationController
  def update_shout
    shout=ShoutList.new(update_shout_params)
    info=ShoutList.find_by(:id =>shout[:id] )
-   if info.update(:shout => shout[:shout],:emotion_no => shout[:emotion_no])
+   
+   if info.update(:shout => shout[:shout], :emotion_no => shout[:emotion_no])
      flash[:update_shut_result] = '更新しました'
    else
      flash[:update_shut_result] = '更新できませんでした。もう一度お願いします。'
@@ -126,6 +137,7 @@ class AfterLogInProsessController < ApplicationController
  
  def shout
    @shout = ShoutList.new(update_shout_params)
+   
    respond_to do |format|
      if @shout.save
        format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Shout was successfully created.' }
@@ -172,12 +184,6 @@ class AfterLogInProsessController < ApplicationController
     redirect_to :action => "menu"
  end
  
- 
- #---------------------------------------------------------------
- 
- def shout_aftre
- end
- 
  def icon
     emotion_no = params[:id]
     img = File.open("public/img/icon/#{emotion_no}.png", "r+b")
@@ -185,6 +191,28 @@ class AfterLogInProsessController < ApplicationController
     img.close
     send_data( bin, type: "image/png", disposition: :inline)
   end
+  
+  def show_article_img
+    article_img = Article.find(params[:id])
+    if !article_img.img.nil?
+      send_data(article_img.img, :type => article_img.img_content, :disposition => 'inline')
+      puts "TSUKAMOTO"
+    else
+      puts "TAKAHIRO"
+    end
+  end 
+  def show_img
+    @user = User.find(params[:id])
+    if !@user.img.nil?
+      send_data(@user.img, :type => @user.img_content, :disposition => 'inline')
+    end
+  end
+ #---------------------------------------------------------------
+ 
+ def shout_aftre
+ end
+ 
+
 
   def find_user
     @q = User.search
@@ -261,13 +289,6 @@ class AfterLogInProsessController < ApplicationController
   def update_my_info
     @info = User.new
     @user_info = User.find_by(:id => params[:id])
-  end
-  
-  def show_img
-    @user = User.find(params[:id])
-    if !@user.img.nil?
-      send_data(@user.img, :type => @user.img_content, :disposition => 'inline')
-    end
   end
 
   def action_update_my_info

@@ -103,7 +103,9 @@ $(document).on('page:load', ready);
 			  			<%= art[:tag].html_safe %><br><br>
 			  		</div>
 			  	<% end %>
-			  	<%= art[:img] %><br>
+			  	<% if !art[:img].nil? %>
+			  		<%= image_tag(after_log_in_prosess_show_article_img_path(:id=>art[:id]), :size => "100x100") %><br>
+				<% end %>
 				<%= art[:comment] %><br><br>
 				<% if current_user.id == art[:user_id] %>
 					<%= link_to "この話題の編集", "/after_log_in_prosess/edit_article_action/#{art[:id]}" %><br><br>
