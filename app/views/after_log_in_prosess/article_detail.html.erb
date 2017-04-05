@@ -11,8 +11,13 @@ $(function () {
         }
     });
 });
-$(document).ready(ready);
-$(document).on('page:load', ready);
+window.onload = function(){
+	if (window.name != "no")
+	{
+		location.reload();
+		window.name = "no";
+	}
+}
 </script>
 
 <!--contents-->
