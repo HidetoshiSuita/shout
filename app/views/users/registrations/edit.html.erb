@@ -35,11 +35,10 @@
     <%= f.submit "更新する" %>
   </div>
 <% end %>
-
+<br>
 <h3>アカウントを削除しますか？</h3>
-
-<p>実行しますか? <%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+<%= button_to "アカウントを削除する", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %>
+<br>
+<%= link_to "戻る", :controller=>"after_log_in_prosess", :action => "menu" %>
 <!--edit <%= resource_name.to_s.humanize %>
 -->

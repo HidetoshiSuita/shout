@@ -96,7 +96,7 @@ $(document).on('page:load', ready);
 				<% if current_user.id == art[:user_id] %>
 					<%= link_to "この話題の編集", "/after_log_in_prosess/edit_article_action/#{art[:id]}" %><br><br>
 				<% end %>
-				<%= "#{art.created_at.strftime("%Y-%m-%d %H:%M")}"%>に<%= link_to "#{art.user.name}" ,"find_user_detail/#{art.user_id}"%>によって作成。<br><br>
+				<%= "#{art.created_at.strftime("%Y-%m-%d %H:%M")}"%>に<%= link_to "#{art.user.name}", :controller => "after_log_in_prosess", :action => "find_user_detail", :id =>art.user_id %>によって作成。<br><br>
 			</div>
 			<br><br>
 			
@@ -121,7 +121,7 @@ $(document).on('page:load', ready);
 				<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 	    	
 				    <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
-					<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"find_user_detail/#{shout_list.user_id}"%><br><br><br>
+					<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout_list.user_id}"%><br><br><br>
 					    
 					<% if !shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><% end %>&emsp;<%= shout_list[:shout] %><br>
 					
@@ -129,9 +129,9 @@ $(document).on('page:load', ready);
 				    <br><br><br>
 				
 				    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
-				      <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
+				      <%=button_to "イイネ済み", "/after_log_in_prosess/destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
 				    <%else%>
-				      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
+				      <%=button_to "イイネ", "/after_log_in_prosess/make_like/#{current_user.id}/#{shout_list[:id]}"%>
 				    <%end%>
 				    
 				    <%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイネ
@@ -153,7 +153,7 @@ $(document).on('page:load', ready);
 							    	<%end%>
 							    		
 									<%= image_tag(after_log_in_prosess_show_img_path(:id=>resp_shout_list[:user_id]), :size => "100x100") %><br>
-									<%=find_user_name resp_shout_list[:user_id]%><br><br><br>
+									<%= link_to "#{find_user_name(resp_shout_list[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{resp_shout_list.user_id}"%><br><br><br>
 										    
 									<% if !resp_shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>resp_shout_list[:emotion_no]))%><% end %>&emsp;<%= resp_shout_list[:shout] %><br>
 									<!-- 元の書き込みに対して返信する　 -->
@@ -161,9 +161,9 @@ $(document).on('page:load', ready);
 									<br><br><br>
 									
 									<%if LikeList.find_by(:shout_list_id => resp_shout_list[:id], :user_id => current_user.id)%>
-										<%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{resp_shout_list[:id]}"%> 
+										<%=button_to "イイネ済み", "/after_log_in_prosess/destroy_like_list/#{current_user.id}/#{resp_shout_list[:id]}"%> 
 									<%else%>
-										<%=button_to "イイネ", "make_like/#{current_user.id}/#{resp_shout_list[:id]}"%>
+										<%=button_to "イイネ", "/after_log_in_prosess/make_like/#{current_user.id}/#{resp_shout_list[:id]}"%>
 									<%end%>
 									    
 									<%=LikeList.where(:shout_list_id => resp_shout_list[:id]).size%>イイネ

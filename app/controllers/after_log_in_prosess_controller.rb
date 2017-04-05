@@ -151,7 +151,7 @@ class AfterLogInProsessController < ApplicationController
 
  def watch_shout
    follow_list = FollowList.get_follow_info_list(current_user.id)
-   @shout = ShoutList.where(:user_id => follow_list).where(resp_shout: nil).order(created_at: :asc)
+   @shout = ShoutList.where(:user_id => follow_list).order(created_at: :asc)
    @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :desc)
  end
 
@@ -209,11 +209,6 @@ class AfterLogInProsessController < ApplicationController
   end
  #---------------------------------------------------------------
  
- def shout_aftre
- end
- 
-
-
   def find_user
     @q = User.search
   end
@@ -232,11 +227,6 @@ class AfterLogInProsessController < ApplicationController
    )
    @folow=FollowList.where(:user_id => @user_info[:id])
    @follower = FollowList.where(:follow_id => @user_info[:id])
- end
-
- def watch_resp_shout
-   @un_resp = ShoutList.get_unresp_shout(params[:id].to_i)
-   @resp = ShoutList.where(:resp_shout => params[:id].to_i)
  end
 
  def follow_user

@@ -1,25 +1,25 @@
-<h5>ユーザー名：<%=@user_info[:name]%></h5>
-<h4><%=flash[:follow_user_result]%></h4>
+<%= image_tag(after_log_in_prosess_show_img_path(:id=>@user_info.id), :size => "100x100") %><br>
+<%=@user_info[:name]%>
 <h5>Shout:<%=@user_shout.size%>回</h5>
 
 <h5><%=link_to "#{@folow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%></h5>
 
 <h5><%=link_to "#{@follower.size}follower", :controller => "after_log_in_prosess", :action => "watch_follower", :id => current_user.id%></h5>
 <%if @follow_info_result !=nil%>
-  <p>フォローしています</p>
-  <%=button_to 'フォロー解除', "delete_follow_list/#{@follow_info_result[:id]}"%>
+  <%=button_to 'フォロー解除', "delete_follow_list/#{@follow_info_result[:id]}"%><br>
 <%elsif current_user.id !=@user_info[:id]%>
-  <%=link_to "フォローする", "follow_user/#{current_user.id}/#{@user_info[:id]}"%>
+  <%=link_to "フォローする", "follow_user/#{current_user.id}/#{@user_info[:id]}"%><br>
 <%else%>
 <%end%>
 
-<%if @user_shout.size%>
-  <%@user_shout.each do |shout|%>
+<%if @user_shout.size %>
+  <% @user_shout.each do |shout| %>
     <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-      <p>名前：<%=find_user_name shout[:user_id]%></p>
-      <p>叫び：<%= shout[:shout]%></p>
-      <%=link_to "返信する" ,:controller => 'after_log_in_prosess', :action => 'resp_shout', :id => shout[:id]%>
-      <p><%=LikeList.where(:shout_list_id => shout[:id]).size%>イイネ</p>
+	  <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
+      <%= link_to "#{find_user_name(shout[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout.user_id}"%><br><br><br>
+      <%= shout[:shout]%><br><br>
+      <%=link_to "返信する" ,:controller => 'after_log_in_prosess', :action => 'resp_shout', :id => shout[:id]%><br><br>
+      <%=LikeList.where(:shout_list_id => shout[:id]).size%>イイネ<br><br>
       <%if LikeList.find_by(:shout_list_id => shout[:id], :user_id => current_user.id)%>
         <%=button_to "イイネ解除", "destroy_like_list/#{current_user.id}/#{shout[:id]}"%>
       <%else%>
