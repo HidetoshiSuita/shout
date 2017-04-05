@@ -32,10 +32,18 @@ $(function () {
             $(this).text('話題作成').removeClass('close');
         }
     });
+    
 });
 
-$(document).ready(ready);
-$(document).on('page:load', ready);
+window.onload = function(){
+	if (window.name != "no")
+	{
+		alert("リロードしました");
+		location.reload();
+		window.name = "no";
+	}
+}
+
 </script>
 
 <!--header_link-->

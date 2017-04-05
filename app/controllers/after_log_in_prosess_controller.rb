@@ -195,9 +195,6 @@ class AfterLogInProsessController < ApplicationController
     article_img = Article.find(params[:id])
     if !article_img.img.nil?
       send_data(article_img.img, :type => article_img.img_content, :disposition => 'inline')
-      puts "TSUKAMOTO"
-    else
-      puts "TAKAHIRO"
     end
   end 
   def show_img

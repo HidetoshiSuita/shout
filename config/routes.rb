@@ -4,17 +4,15 @@ Rails.application.routes.draw do
   resources :follow_lists
   resources :shout_lists
   devise_for :users, controllers: {registrations: "registrations"}
-  resources :articles
   resources :genres
+  resources :articles
   
   namespace :admin do
-
     get 'admin_menu'
     get 'admin_user'
     get 'admin_update_user'
   end
   
-  get 'articles/articles_menu' => 'articles#articles_menu'
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
   get 'after_log_in_prosess/my_genre' =>'after_log_in_prosess#my_genre'
   post 'after_log_in_prosess/new_article_action' => 'after_log_in_prosess#new_article_action'
