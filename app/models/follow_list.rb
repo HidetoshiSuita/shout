@@ -7,7 +7,6 @@ class FollowList < ApplicationRecord
     follow_recod.each do |info|
       follow_list.push(info[:follow_id])
     end
-    #follow_list.push(my_id)
   end
 
 end
