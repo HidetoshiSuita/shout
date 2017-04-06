@@ -23,9 +23,7 @@ class AfterLogInProsessController < ApplicationController
    # Shoutlistからarticle_idの個数が多い順で取得
    art = ShoutList.select(:article_id).group(:article_id).count
    art_group = art.keys
-   # art_groupに存在しない=shoutが存在しないArticleの取得
-   not_art_group = Article.select(:id)
-   
+   @art_group = art_group
    @genre_id = 1
    if !params[:genre_id].nil?
        @genre_id = params[:genre_id]
