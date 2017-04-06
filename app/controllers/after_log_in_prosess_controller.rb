@@ -23,7 +23,7 @@ class AfterLogInProsessController < ApplicationController
    # Shoutlistからarticle_idの個数が多い順で取得
    before_art = ShoutList.select(:article_id).group(:article_id).count
    sort_art = before_art.sort
-   art = art.to_h
+   art = sort_art.to_h
    art_group = []
    art.sort_by{|k, v|  art_group.push(k) }
    @art_group = art_group
