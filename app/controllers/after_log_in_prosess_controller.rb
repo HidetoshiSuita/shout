@@ -37,9 +37,6 @@ class AfterLogInProsessController < ApplicationController
      end
    end
    
-   @art_group = art_group
-   @art = before_art
-   
    @genre_id = 1
    if !params[:genre_id].nil?
        @genre_id = params[:genre_id]
