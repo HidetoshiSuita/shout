@@ -26,6 +26,14 @@ class AfterLogInProsessController < ApplicationController
    art = sort_art.to_h
    art_group = []
    art.sort_by{|k, v|  art_group.push(k) }
+
+   id = Article.select(:id).where.not(:id => art_group )
+   id.each do |i|
+     if !art_group.include?(i.id)
+       art_group << i.id
+     end
+   end
+   
    @art_group = art_group
    @art = art
    
@@ -34,7 +42,7 @@ class AfterLogInProsessController < ApplicationController
        @genre_id = params[:genre_id]
        @article = Article.where("genre_id = #{@genre_id}").order(art_group)
    else
-       @article = Article.order(art_group)
+       @article = Article.all.order(art_group)
    end
    
    @genre = Genre.all
