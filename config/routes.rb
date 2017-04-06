@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   #resources :like_lists
   #resources :follow_lists
-  #resources :shout_lists
+  resources :shout_lists
   
   devise_for :users, controllers: {registrations: "registrations"}
   resources :genres
