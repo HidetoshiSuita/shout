@@ -21,11 +21,13 @@ class AfterLogInProsessController < ApplicationController
  def favorite
    #人気順
    # Shoutlistからarticle_idの個数が多い順で取得
-   art = ShoutList.select(:article_id).group(:article_id).count
-   @art = art
+   before_art = ShoutList.select(:article_id).group(:article_id).count
+   sort_art = before_art.sort
+   art = art.to_h
    art_group = []
    art.sort_by{|k, v|  art_group.push(k) }
    @art_group = art_group
+   @art = art
    
    @genre_id = 1
    if !params[:genre_id].nil?
