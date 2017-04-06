@@ -27,7 +27,7 @@ class AfterLogInProsessController < ApplicationController
    val_arr = []
    val_arr = before_art.values.sort.reverse!
    val_arr.each do |v|
-     art_group = before_art.invert[v]
+     art_group << before_art.invert[v]
    end
    
    id = Article.select(:id).where.not(:id => art_group )
@@ -38,7 +38,7 @@ class AfterLogInProsessController < ApplicationController
    end
    
    @art_group = art_group
-   @art = art
+   @art = before_art
    
    @genre_id = 1
    if !params[:genre_id].nil?
