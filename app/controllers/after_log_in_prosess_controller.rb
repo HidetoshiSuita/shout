@@ -24,7 +24,7 @@ class AfterLogInProsessController < ApplicationController
    art = ShoutList.select(:article_id).group(:article_id).count
    @art = art
    art_group = []
-   art.sort_by{|k,v|  art_group << k }
+   art.sort_by{|k, v|  art_group.push(k) }
    @art_group = art_group
    
    @genre_id = 1
