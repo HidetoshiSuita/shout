@@ -40,9 +40,11 @@ class AfterLogInProsessController < ApplicationController
    @genre_id = 1
    if !params[:genre_id].nil?
        @genre_id = params[:genre_id]
-       @article = Article.where("genre_id = #{@genre_id}").order(art_group)
+       article = Article.where(id: art_group).where("genre_id = #{@genre_id}")
+       @article = ids.collect {|id| articles.detect {|x| x.id == id.to_i}}
    else
-       @article = Article.order(art_group)
+       article = Article.where(id: art_group)
+       @article = art_group.collect {|id| article.detect {|x| x.id == id.to_i}}
    end
    
    @genre = Genre.all
