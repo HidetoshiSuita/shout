@@ -42,7 +42,7 @@ class AfterLogInProsessController < ApplicationController
        @genre_id = params[:genre_id]
        @article = Article.where("genre_id = #{@genre_id}").order(art_group)
    else
-       @article = Article.all.order(art_group)
+       @article = Article.order(art_group)
    end
    
    @genre = Genre.all
