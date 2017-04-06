@@ -1,47 +1,3 @@
-<script>
-$(function () {
-    $('.shout_button').prevAll().hide();
-    $('.shout_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('この話題について叫ぶ').removeClass('close');
-        }
-    });
-    
-    $('.shout_list_button').prevAll().hide();
-    $('.shout_list_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('返信を見る').removeClass('close');
-        }
-    });
-    
-    $('.new_article_button').prevAll().hide();
-    $('.new_article_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('話題作成').removeClass('close');
-        }
-    });
-});
-window.onload = function(){
-	if (window.name != "no")
-	{
-		location.reload();
-		window.name = "no";
-	}
-}
-</script>
-
 <!--header_link-->
 <table>
 	<td><h1><%= link_to "新着順", :controller => "after_log_in_prosess", :action => "menu" %></h1></td> 
@@ -203,3 +159,40 @@ window.onload = function(){
 		</div>
 	<%end%>
 <%end%>
+<script>
+$(function () {
+    $('.shout_button').prevAll().hide();
+    $('.shout_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('この話題について叫ぶ').removeClass('close');
+        }
+    });
+    
+    $('.shout_list_button').prevAll().hide();
+    $('.shout_list_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('返信を見る').removeClass('close');
+        }
+    });
+    
+    $('.new_article_button').prevAll().hide();
+    $('.new_article_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('話題作成').removeClass('close');
+        }
+    });
+    
+});
+</script>

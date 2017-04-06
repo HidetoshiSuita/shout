@@ -1,25 +1,3 @@
-<script>
-$(function () {
-    $('.shout_list_button').prevAll().hide();
-    $('.shout_list_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('返信を見る').removeClass('close');
-        }
-    });
-});
-window.onload = function(){
-	if (window.name != "no")
-	{
-		location.reload();
-		window.name = "no";
-	}
-}
-</script>
-
 <!--contents-->
 <h1>話題詳細</h1>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
@@ -109,3 +87,17 @@ window.onload = function(){
 		<% end %>
 	<% end %>
 </div>
+<script>
+$(function () {
+    $('.shout_list_button').prevAll().hide();
+    $('.shout_list_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('返信を見る').removeClass('close');
+        }
+    });
+});
+</script>

@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  resources :like_lists
-  resources :follow_lists
-  resources :shout_lists
+  #resources :like_lists
+  #resources :follow_lists
+  #resources :shout_lists
+  
   devise_for :users, controllers: {registrations: "registrations"}
   resources :genres
   resources :articles
@@ -27,7 +28,7 @@ Rails.application.routes.draw do
   get "/after_log_in_prosess/show_article_img" => 'after_log_in_prosess#show_article_img'
 
   get 'after_log_in_prosess/watch_shout' => 'after_log_in_prosess#watch_shout'
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  
   get 'after_log_in_prosess/find_user' => 'after_log_in_prosess#find_user'
 
   get 'after_log_in_prosess/find_user_result' => 'after_log_in_prosess#find_user_result'

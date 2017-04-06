@@ -1,24 +1,5 @@
-<script>
-$(function () {
-	
-    $('.shout_list_button').prevAll().hide();
-    $('.shout_list_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('返信を見る').removeClass('close');
-        }
-    });
-});
-
-$(document).ready(ready);
-$(document).on('page:load', ready);
-</script>
 <h5><%=flash[:update_shut_result]%></h5>
 <h5><%=flash[:destroy_shout_result]%></h5>
-
 
 <%@shout.each do |shout_list|%>
   <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
@@ -49,3 +30,18 @@ $(document).on('page:load', ready);
 <%end%>
 
 <%=link_to "戻る", :action => "menu"%>
+
+<script>
+$(function () {
+    $('.shout_list_button').prevAll().hide();
+    $('.shout_list_button').click(function () {
+        if ($(this).prevAll().is(':hidden')) {
+            $(this).prevAll().slideDown();
+            $(this).text('閉じる').addClass('close');
+        } else {
+            $(this).prevAll().slideUp();
+            $(this).text('返信を見る').removeClass('close');
+        }
+    });
+});
+</script>
