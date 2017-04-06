@@ -22,11 +22,14 @@ class AfterLogInProsessController < ApplicationController
    #人気順
    # Shoutlistからarticle_idの個数が多い順で取得
    before_art = ShoutList.select(:article_id).group(:article_id).count
-   sort_art = before_art.sort
-   art = sort_art.to_h
+   
    art_group = []
-   art.sort_by{|k, v|  art_group.push(k) }
-
+   val_arr = []
+   val_arr = before_art.values.sort.reverse!
+   val_arr.each do |v|
+     art_group = before_art.invert[v]
+   end
+   
    id = Article.select(:id).where.not(:id => art_group )
    id.each do |i|
      if !art_group.include?(i.id)
