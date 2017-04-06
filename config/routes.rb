@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   end
   
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
+  get 'after_log_in_prosess/favorite' =>'after_log_in_prosess#favorite'
   get 'after_log_in_prosess/my_genre' =>'after_log_in_prosess#my_genre'
   post 'after_log_in_prosess/new_article_action' => 'after_log_in_prosess#new_article_action'
   post 'after_log_in_prosess/shout' =>  'after_log_in_prosess#shout'

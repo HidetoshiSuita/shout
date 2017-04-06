@@ -20,23 +20,25 @@ class AfterLogInProsessController < ApplicationController
  
  def favorite
    #人気順
-   # Shoutlistからarticle_idの最大値を取得
-   cntmax = Shoutlist.maximum('id')
-   max_array = []
-   tmp = []
+   # Shoutlistからarticle_idの個数が多い順で取得
+   art = ShoutList.select(:article_id).group(:article_id).count
+   art_group = art.keys
+   # art_groupに存在しない=shoutが存在しないArticleの取得
+   not_art_group = Article.select(:id)
    
-   # 順番にデータの取得をしていく。
-   [1..cntmax].each do |article_id|
-      tmp.clear
-      max_array = ShoutList.where("article_id = #{article_id}").count()
-      tmp << article_id
-      tmp << max_array
+   @genre_id = 1
+   if !params[:genre_id].nil?
+       @genre_id = params[:genre_id]
+       @article = Article.where("genre_id = #{@genre_id}").order(art_group)
+   else
+       @article = Article.all.order(art_group)
    end
-   max_array = tmp.sort_by{|max|
-     tmp = max[][1]
-   }
-   puts max_array
    
+   @genre = Genre.all
+   @article_info = Article.new
+   @shout = ShoutList.new
+   @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
  
  def my_genre
