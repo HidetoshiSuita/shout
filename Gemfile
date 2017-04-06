@@ -50,7 +50,6 @@ group :development do
   gem 'hirb'
   gem 'hirb-unicode'
 end
-
 gem 'devise'
 #deviseのインストール
 gem 'rails-i18n'
