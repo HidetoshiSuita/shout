@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_filter :auth
 
   # GET /articles
   # GET /articles.json
@@ -60,7 +61,13 @@ class ArticlesController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+  
+  def auth
+    authenticate_or_request_with_http_basic do |user, pass|
+      user == ENV['BASIC_ID'] && pass == ENV['BASIC_PASSWORD']
+    end
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_article

@@ -59,6 +59,8 @@ gem 'devise-i18n-views'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 gem 'ransack'
+gem 'acts-as-taggable-on'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

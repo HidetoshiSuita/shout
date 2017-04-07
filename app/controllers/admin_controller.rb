@@ -1,7 +1,7 @@
 class AdminController < ApplicationController
   before_action :login_check
-  # Basic認証フィルタを対象アクションに指定
-  http_basic_authenticate_with :name => 'admin', :password => 'pass', :only => :admin_menu
+  before_filter :auth
+  
 
   def admin_menu
   end
@@ -20,5 +20,11 @@ class AdminController < ApplicationController
     end
     
     redirect_to :action => "admin_user"
+  end
+  
+  def auth
+    authenticate_or_request_with_http_basic do |user, pass|
+      user == ENV['BASIC_ID'] && pass == ENV['BASIC_PASSWORD']
+    end
   end
 end
