@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'admin_update_user'
   end
   
+  get 'after_log_in_prosess/ban' =>'after_log_in_prosess#ban'
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
   get 'after_log_in_prosess/favorite' =>'after_log_in_prosess#favorite'
   get 'after_log_in_prosess/my_genre' =>'after_log_in_prosess#my_genre'

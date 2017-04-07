@@ -1,5 +1,9 @@
 class AfterLogInProsessController < ApplicationController
   before_action :login_check
+  before_action :ban_check
+ 
+ def ban
+ end
  
  def menu
    #新着順
@@ -336,7 +340,15 @@ class AfterLogInProsessController < ApplicationController
     end
     redirect_to :action => "menu"
   end
+  
+  
   private
+  def ban_check
+    usr = User.find_by(:id => current_user.id)
+    if usr.user_available == false
+      render :ban
+    end
+  end
 
   def resp
     params.require(:shout_list).permit(:shout, :user_id, :id, :emotion_no, :article_id, :shout_verify )
