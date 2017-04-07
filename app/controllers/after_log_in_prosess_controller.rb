@@ -89,15 +89,29 @@ class AfterLogInProsessController < ApplicationController
   end
 
  def new_article_action
-   @article_info = Article.new(new_create_article)
+   article_info = Article.new(new_create_article)
+   hash = article_info.comment.scan(/[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+/).map(&:strip)
    
-   if !params[:article][:img].nil?
-      @article_info.img = params[:article][:img].read
-      @article_info.img_content = params[:article][:img].content_type
+   #ハッシュの箇所の抜き取り
+   hash.each do |h|
+     article_info.comment.slice!(h)
    end
    
+   if !params[:article][:img].nil?
+      article_info.img = params[:article][:img].read
+      article_info.img_content = params[:article][:img].content_type
+   end
+   
+   @article_info = article_info
    respond_to do |format|
      if @article_info.save
+       
+       #抽出したハッシュタグをsave
+       hash.each do |h|
+         @hash = HashTag.new(article_id: @article_info.id, tag: h)
+         @hash.save
+       end
+       
        format.html { redirect_to after_log_in_prosess_menu_path, notice: 'Article was successfully created.' }
        format.json { render :menu, status: :created, location: @article_info }
      else
@@ -115,6 +129,12 @@ class AfterLogInProsessController < ApplicationController
  def update_article_action
    article = Article.new(new_create_article)
    info = Article.find_by(:id => article[:id] )
+   hash = article_info.comment.scan(/[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+/).map(&:strip)
+   
+   #ハッシュの箇所の抜き取り
+   hash.each do |h|
+     article_info.comment.slice!(h)
+   end
    
    if !params[:article][:img].nil?
       article.img = params[:article][:img].read
@@ -124,6 +144,13 @@ class AfterLogInProsessController < ApplicationController
    if info.update(
      :title => article[:title], :tag => article[:tag], :comment => article[:comment], :img => article[:img], :genre_id => article[:genre_id] , :img =>article[:img], :img_content =>article[:img_content]
       )
+      
+     #抽出したハッシュタグをsave
+     hash.each do |h|
+       @hash = HashTag.new(article_id: @article_info.id, tag: h)
+       @hash.save
+     end
+      
      flash[:update_article_result] = '更新しました'
    else
      flash[:update_article_result] = '更新できませんでした。もう一度お願いします。'
@@ -348,6 +375,10 @@ class AfterLogInProsessController < ApplicationController
     if usr.user_available == false
       render :ban
     end
+  end
+
+  def update_hash
+    params.require(:hash_tag).permit(:article_id, :tag )
   end
 
   def resp
