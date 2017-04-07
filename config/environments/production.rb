@@ -27,7 +27,8 @@ Rails.application.configure do
   config.serve_static_assets = true
 
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
-
+  config.action_mailer.default_url_options = { host: 'shout-test.herokuapp.com' }
+  #deviseの設定↑
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
@@ -65,7 +66,7 @@ Rails.application.configure do
     port:                  587,
     domain:                'gmail.com',
     user_name:             'shoutunnei@gmail.com',
-    password:              ENV['MAIL_PASSWORD'],
+    password:              'givmohfkkktbrbox',
     authentication:        'plain',
     enable_starttls_auto:  true  
   }
