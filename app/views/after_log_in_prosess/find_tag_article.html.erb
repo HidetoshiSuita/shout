@@ -1,44 +1,3 @@
-
-<!--header_link-->
-<table>
-	<td><h1><%= link_to "新着順", :controller => "after_log_in_prosess", :action => "menu" %></h1></td> 
-	<td><h1><%= link_to "人気順", :controller => "after_log_in_prosess", :action => "favorite" %></h1></td>
-	<td><h1><%= link_to "自分用", :controller => "after_log_in_prosess", :action => "my_genre" %></h1></td>
-</table>
-<!--genre_link-->
-<table>
-	<% @genre.each do |g| %>
-		<td><%= link_to "#{g.name}", :controller => "after_log_in_prosess", :action => "menu", genre_id: g.id %></td>
-	<% end %>
-</table>
-<br>
-<!--new contents-->
-<div class="content">
-	<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'new_article_action'} do |f| %>
-	  <%=f.label "タイトル"%>
-	  <%= f.text_field :title, :size=>"80" %>
-	  <br><br>
-	  <%=f.label "埋め込みタグ"%>
-	  <%= f.text_field :tag, :size=>"80" %>
-	  <br><br>
-	  <%=f.label "ジャンル"%>
-	  <%= f.collection_select :genre_id, Genre.all, :id, :name, :selected => @genre_id  %>
-	  <br><br>
-	  <%=f.label "コメント"%>
-	  <%= f.text_area :comment, :size=>"80x20" %>
-	  <br><br>
-	  <%=f.label "画像"%>
-	  <%= f.file_field  :img %>
-	  <br><br>
-	  <%= f.hidden_field :user_id, :value => current_user.id %>
-	  <%=f.submit "新規作成"%>
-	<%end%>
-	<br><br>
-	<div class="new_article_button">話題作成</div>
-</div>
-
-<br>
-<!--contents-->
 <% if !@article.nil? %>
 	<h1>話題一覧</h1>
 	<%@article.each do |art|%>
@@ -175,17 +134,5 @@ $(function () {
             $(this).text('返信を見る').removeClass('close');
         }
     });
-    
-    $('.new_article_button').prevAll().hide();
-    $('.new_article_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('話題作成').removeClass('close');
-        }
-    });
-    
 });
 </script>

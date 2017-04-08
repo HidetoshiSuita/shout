@@ -9,6 +9,11 @@
 	  <%=f.label "ジャンル"%>
 	  <%= f.collection_select :genre_id, Genre.all, :id, :name, :selected => @article.genre_id  %>
 	  <br><br>
+      <% hash = find_hash_name(@article[:id]) %>
+      <% hash_arr = [] %>
+      <% hash.each do |h|%>
+	  	<% @article[:comment] = @article[:comment] + h.tag + " " %>
+	  <% end %>
 	  <%=f.label "コメント"%>
 	  <%= f.text_area :comment, value:@article[:comment], :size=>"80x20" %>
 	  <br><br>

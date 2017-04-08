@@ -77,7 +77,7 @@ class AfterLogInProsessController < ApplicationController
    @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
  end
 
-  def update_my_genre_info
+ def update_my_genre_info
     UserGenre.delete_all(user_id: current_user.id)
     unless params[:genre].nil?
       params[:genre][:genre_id].each do |g|
@@ -86,8 +86,23 @@ class AfterLogInProsessController < ApplicationController
       end
     end
     redirect_to :action => "my_genre"
-  end
-
+ end
+ 
+ def find_tag_article
+   #タグによる記事の検索
+   art_id = HashTag.where(:tag => params[:tag])
+   art_id_arr = []
+   
+   art_id.each do |art|
+     art_id_arr << art.article_id
+   end
+   
+   @shout = ShoutList.new
+   @article = Article.where(id: art_id_arr).order(created_at: :desc)
+   @shout_list = ShoutList.where(resp_shout: nil).order(created_at: :asc)
+   @resp_shout = ShoutList.where.not(resp_shout: nil).order(created_at: :asc)
+ end
+ 
  def new_article_action
    article_info = Article.new(new_create_article)
    hash = article_info.comment.scan(/[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+/).map(&:strip)
@@ -129,11 +144,11 @@ class AfterLogInProsessController < ApplicationController
  def update_article_action
    article = Article.new(new_create_article)
    info = Article.find_by(:id => article[:id] )
-   hash = article_info.comment.scan(/[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+/).map(&:strip)
+   hash = article.comment.scan(/[#＃][Ａ-Ｚａ-ｚA-Za-z一-鿆0-9０-９ぁ-ヶｦ-ﾟー]+/).map(&:strip)
    
    #ハッシュの箇所の抜き取り
    hash.each do |h|
-     article_info.comment.slice!(h)
+     article.comment.slice!(h)
    end
    
    if !params[:article][:img].nil?
@@ -144,10 +159,14 @@ class AfterLogInProsessController < ApplicationController
    if info.update(
      :title => article[:title], :tag => article[:tag], :comment => article[:comment], :img => article[:img], :genre_id => article[:genre_id] , :img =>article[:img], :img_content =>article[:img_content]
       )
-      
+     
+     #先に消しておく
+     del_hash = HashTag.where(:article_id => info.id)
+     del_hash.delete_all
+     
      #抽出したハッシュタグをsave
      hash.each do |h|
-       @hash = HashTag.new(article_id: @article_info.id, tag: h)
+       @hash = HashTag.new(article_id: info.id, tag: h)
        @hash.save
      end
       

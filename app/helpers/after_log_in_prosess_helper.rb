@@ -7,4 +7,8 @@ module AfterLogInProsessHelper
     genre = Genre.find_by(:id => genre_id)
     genre.name
   end
+  def find_hash_name(art_id)
+    hash = HashTag.select(:tag).where(:article_id=>art_id)
+    hash
+  end
 end
