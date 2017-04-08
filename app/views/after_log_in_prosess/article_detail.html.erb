@@ -16,6 +16,7 @@
 		<% hash.each do |h|%>
 			<%= link_to "#{h.tag}", :controller => 'after_log_in_prosess', :action => 'find_tag_article', :tag => h.tag %>
 		<% end %>
+		<br><br>
 		<% if current_user.id == @article.user_id %>
 			<%= link_to "この話題の編集", "/after_log_in_prosess/edit_article_action/#{@article.id}" %><br><br>
 		<% end %>
