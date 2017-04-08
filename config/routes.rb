@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :hash_tags
-  resources :hash_tags
+  #resources :hash_tags
   #resources :like_lists
   #resources :follow_lists
   #resources :shout_lists
@@ -15,6 +14,7 @@ Rails.application.routes.draw do
     get 'admin_user'
     get 'admin_update_user'
   end
+  
   get 'after_log_in_prosess/find_tag_article' => 'after_log_in_prosess#find_tag_article' 
   get 'after_log_in_prosess/ban' =>'after_log_in_prosess#ban'
   get 'after_log_in_prosess/menu' =>'after_log_in_prosess#menu'
