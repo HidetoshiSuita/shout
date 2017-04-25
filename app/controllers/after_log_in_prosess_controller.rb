@@ -3,6 +3,7 @@ class AfterLogInProsessController < ApplicationController
   before_action :ban_check
  
  def ban
+   #利用停止
  end
  
  def menu
