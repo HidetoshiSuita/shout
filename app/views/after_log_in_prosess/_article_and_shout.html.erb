@@ -109,7 +109,8 @@
 					</div>
 				<% end %>
 			<% end %>
-		<%if @shout_list.count > 1 %>
+		<% shout_list = ShoutList.where( :article_id => art[:id] ) %>
+		<% if shout_list.count > 0 %>
 			<div class="shout_list">この話題に関する叫びを見る</div>
 		<% end %>
 		</div>
