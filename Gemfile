@@ -29,27 +29,6 @@ gem 'jquery-turbolinks'
 # gem 'redis', '~> 3.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-group :development do
-  # 高機能コンソール
-  gem 'pry-rails'
-  #テスト
-  gem 'rspec-rails'
-  gem 'guard-rspec', require: false #guardでrspecを動かす
-  gem 'terminal-notifier'
-  gem 'terminal-notifier-guard'#デスクトップ通知を行う
-  # デバッガー
-  gem 'pry-byebug'
-  gem 'pry-stack_explorer'
-  # カバレッジ取得
-  gem "simplecov"
-  # pryの入出力に色付け
-  gem 'pry-coolline'
-  gem 'awesome_print'
-
-  # PryでのSQLの結果を綺麗に表示
-  gem 'hirb'
-  gem 'hirb-unicode'
-end
 gem 'devise'
 #deviseのインストール
 gem 'rails-i18n'
@@ -60,11 +39,6 @@ gem 'devise-i18n-views'
 # gem 'capistrano-rails', group: :development
 gem 'ransack'
 gem 'acts-as-taggable-on'
-
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platform: :mri
-end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.

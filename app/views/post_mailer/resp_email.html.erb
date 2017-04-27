@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
   </head>
   <body>
-    <h3><%=@user_name%>さんから返信がありました。</h3>
+  	
+  	<p><%=@user.name %>さん </p><br>
+  	
     <div>
-      こちらのアドレスは送信専用なので、返信していいただいてもお答えすることができません。
-    <div>
+    <p><%=@resp_user.name%>さんから返信がありました。</p><br><br>
+    <h3><%= link_to "#{@article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => @article.id %>にて返信。</h3>
+    <p><%= @resp %></p><br><br><br>
+    
+    <p>こちらのアドレスは送信専用なので、返信していいただいてもお答えすることができません。</p>
   </body>
 </html>
