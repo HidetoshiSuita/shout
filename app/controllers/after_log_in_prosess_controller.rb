@@ -240,15 +240,15 @@ class AfterLogInProsessController < ApplicationController
                             )
                             
     user = User.find_by(:id =>current_user.id)
-    resp_user = User.find_by(:id => resp_shout.user_id)
+    resp_user_shout = ShoutList.find_by(:id => resp_shout[:resp_shout])
+    resp_user = User.find_by(:id => resp_user_shout[:user_id])
     shout = resp[:shout]
     article = Article.find_by(:id => resp_shout.article_id)
 
     if resp_shout.save
       # 1 ログイン中のユーザ情報（返信した人）　2　返信先の人　3　返信内容　4　返信先の記事
       PostMailer.resp_email(
-      user, resp_user, shout, article ).deliver
-      
+      user, resp_user, shout, article ).deliver      
     end
     
     redirect_to :action => "menu"
