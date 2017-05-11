@@ -281,8 +281,7 @@ class AfterLogInProsessController < ApplicationController
   end
 
  def find_user_result
-   @q = User.search(params[:q])
-   @users = @q.result(distinct: true)
+   @users = User.where(:name => params[:q][:name_cont]).or(User.where(:email => params[:q][:name_cont]))
  end
 
  def find_user_detail

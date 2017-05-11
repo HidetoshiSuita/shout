@@ -1,6 +1,9 @@
 
 <%@users.each do |user_hash|%>
-  <p><%= link_to user_hash[:name], "find_user_detail/#{user_hash[:id]}" %></p>
+<br><br>
+  <%= link_to user_hash[:name], "find_user_detail/#{user_hash[:id]}" %><br>
+  <%= image_tag(after_log_in_prosess_show_img_path(:id=>user_hash.id), :size => "100x100") %><br>
+  <h3>自己紹介:</h3><%=user_hash.introduction%><br><br>
 <%end%>
 
 <%=link_to "戻る", :action => "find_user"%>
