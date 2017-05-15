@@ -10,6 +10,7 @@ class User < ApplicationRecord
   
   has_many :user_genres
   has_many :genres, through: :user_genres
+  has_many :hash_tags, through: :user_hash_tags
   has_many :articles
 
 end
