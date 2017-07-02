@@ -7,23 +7,38 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <header>
-  	<%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br>
-	  これは怒りを共有するアプリです<br><br>
-    <nav>
-      <!-- user_signed_in? はユーザがログインしているか調べるdeviseのHelperメソッド -->
-      <% if user_signed_in? %>
-        <!-- current_user は現在ログインしているUserオブジェクトを返すdeviseのHelperメソッド -->
-        <!-- *_path はUserモデルを作成したときに、
-          deviseにより自動で作成されてますので、rake routesで確認できます -->
-        ようこそ <strong>
-          <%=link_to "#{current_user.name}", "/after_log_in_prosess/watch_my_info/#{current_user.id}"%>
-        </strong>さん！
-        <%= link_to 'アカウント管理', edit_user_registration_path %>|
-        <%=link_to 'ユーザーを見つける' , after_log_in_prosess_find_user_path%> |
-        <%=link_to '友人の叫びを見る' , after_log_in_prosess_watch_shout_path%>｜
-        <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <% end %>
+  	<% if user_signed_in? %>
+  	<nav>
+  	<div id="header-area">
+		<div class="container clr">
+			<div class="header-left">
+				<span>ようこそ</span>
+				<%=link_to "#{current_user.name}", "/after_log_in_prosess/watch_my_info/#{current_user.id}"%>さん！
+			</div>
+			<div class="header-right">
+				<ul class="nav-top clr">
+					<li>
+						<%= link_to image_tag('nv-01.png',{:border => '0', :alt => '友人の叫びを見る'}), after_log_in_prosess_watch_shout_path %>
+						<span>友人の叫びを見る</span>
+					</li>
+					<li>
+						<%= link_to image_tag('nv-02.png',{:border => '0', :alt => '友達をさがす'}) , after_log_in_prosess_find_user_path%>
+						<span>友達をさがす</span>
+					</li>
+					<li>
+						<%= link_to image_tag('nv-03.png',{:border => '0', :alt => 'アカウント管理'}) , edit_user_registration_path%>
+						<span>アカウント管理</span>
+					</li>
+					<li>
+						<%= link_to image_tag('nv-04.png',{:border => '0', :alt => 'ログアウト'}), destroy_user_session_path, method: :delete %>
+						<span>ログアウト</span>
+					</li>
+				</ul>
+			</div>
+		</div><!-- /.container -->
+	</div><!-- /.header-area -->
     </nav>
+    <% end %>
   </header>
 <hr>
   <body>

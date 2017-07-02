@@ -1,10 +1,24 @@
-
-
-<%=search_form_for @q, url: after_log_in_prosess_find_user_result_path do |f|%>
-  <%= f.label :name_cont, 'ユーザー名 or メールアドレス'%>
-  <%= f.text_field :name_cont%>
-  <%= f.submit "Search" %>
-<%end%>
-<h4><%=flash[:follow_user_result]%></h4>
-
-<%=link_to "戻る", :action => "menu"%>
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		
+		<div class="login-form">
+			<%=search_form_for @q, url: after_log_in_prosess_find_user_result_path do |f|%>
+				<div class="form-group">
+					<!--<label for="search">ユーザー名 or メールアドレス</label>-->
+					<%= f.label :name_cont, 'ユーザー名 or メールアドレス'%>
+					<!--<input type="text" name="" id="search" placeholder="ユーザー名 or メールアドレス">-->
+					<%= f.text_field :name_cont%>
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<%= f.submit "友達を検索する", :class=>"btn-cts", :name=>"search" %>
+					<%=link_to "戻る", :action => "menu"%>
+				</div><!-- /.form-group -->
+			<%end%>
+			<h4><%=flash[:follow_user_result]%></h4>
+		</div><!-- /.login-form -->	
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
+<div class="footer">
+	&copy;2017 by Shout.
+</div>

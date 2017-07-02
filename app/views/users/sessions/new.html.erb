@@ -1,26 +1,30 @@
-<h2>Log in</h2>
-<%=flash[:need_log_in]%>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+<div id="main-area" class="login-page">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		<div class="login-form">
+			<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+				<div class="form-group">
+					<%= f.label :email %><br />
+					<%= f.email_field :email, autofocus: true %>
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<%= f.label :password %><br />
+					<%= f.password_field :password, autocomplete: "off" %>					
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<% if devise_mapping.rememberable? -%>
+						<div class="field">
+							<%= f.check_box :remember_me %>
+							<%= f.label :remember_me %>
+						</div>
+					<% end -%>
+				</div><!-- /.form-group -->
+				<div class="form-group">
+					<%= f.submit "ログイン", :class=>"btn-cts" %>
+				</div><!-- /.form-group -->
+				<%= render "devise/shared/links" %>
+				<!-- /.form-group -->
+			<% end %>
+		</div><!-- /.login-form -->	
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
