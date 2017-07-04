@@ -1,29 +1,44 @@
-<%= form_for @info, :url => {:controller => 'after_log_in_prosess', :action => 'action_update_my_info'} do |f| %>
-  <%=f.label "プロフィール画像"%>
-  <%= image_tag(after_log_in_prosess_show_img_path(:id=>@user_info[:id]), :size => "100x100") %><br>
-  <%= f.file_field  :img %>
-  <br><br>
-  <%=f.label "名前"%>
-  <%= f.text_field :name, value:@user_info[:name], :size=>"80"%>
-  <br><br>
-  <%=f.label "紹介文"%>
-  <%=f.text_area :introduction, value:@user_info[:introduction], :size=>"80x10"%>
-  <br><br>
-  
-  <table>
-  <% Genre.all.each do |genre| %>
-	<td><%= check_box_tag 'genre[genre_id][]', genre.id,  @user_info.genres.ids.include?(genre.id), :genre_id => "genre_#{genre.id}" %>
-	<%= genre.name %></td>
-	<% puts @user_info.genres.include?(genre.id) %>
-  <% end %>
-  </table>
-  
-  <%=f.hidden_field :id, value:current_user.id%>
-  <br>
-  <%=f.submit "上書きする"%>
-<%end%>
-<br>
-※上書きするを押下しないと反映されません
-<br>
-<br>
-<%=link_to "戻る", :controller => "after_log_in_prosess", :action => "watch_my_info" , :id => current_user.id %>
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		
+		<div class="tab-content current">
+			<div class="box-item box-watch">
+				<h2>プロフィール画像</h2>
+				<div class="login-form">
+					<%= form_for @info, :url => {:controller => 'after_log_in_prosess', :action => 'action_update_my_info'} do |f| %>
+						<div class="form-group">
+							<div class="box-watch-top">
+								<%= image_tag(after_log_in_prosess_show_img_path(:id=>@user_info[:id]), :size => "100x100") %><br>
+								<%= f.file_field  :img %>
+							</div><!-- /.box-watch-top -->
+						</div><!-- /.form-group -->
+						<div class="form-group">
+							<%=f.label "名前"%>
+							<%= f.text_field :name, value:@user_info[:name]%>
+						</div><!-- /.form-group -->
+						<div class="form-group">
+							<%=f.label "紹介文"%>
+							<%=f.text_area :introduction, value:@user_info[:introduction], :size=>"80x10"%>
+						</div>
+						<table>
+							<% Genre.all.each do |genre| %>
+								<td><%= check_box_tag 'genre[genre_id][]', genre.id,  @user_info.genres.ids.include?(genre.id), :genre_id => "genre_#{genre.id}" %>
+								<%= genre.name %></td>
+								<% puts @user_info.genres.include?(genre.id) %>
+							<% end %>
+						</table>
+						<div class="form-group">
+							<%=f.hidden_field :id, value:current_user.id%>
+							<%=f.submit "上書きする"%>
+							<p>※上書きするを押下しないと反映されません</p> 
+						</div><!-- /.form-group -->
+					<% end %>
+				</div><!-- /.login-form -->	
+			</div><!--/.box-item-->
+		</div><!-- /.tab-content -->
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
+<div class="footer">
+	&copy;2017 by Shout.
+</div>

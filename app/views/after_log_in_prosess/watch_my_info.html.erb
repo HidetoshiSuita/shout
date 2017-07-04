@@ -1,22 +1,41 @@
-<h4> <%=flash[:update_my_info]%></h4>
-<%= image_tag(after_log_in_prosess_show_img_path(:id=>@user.id), :size => "100x100") %><br>
-<h3>名前:</h3><%=@user.name%><br>
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		
+		<div class="tab-content current">
+			<div class="box-item box-watch">
+				<div class="box-watch-top">
+					<p class="box-watch-img"><%= image_tag(after_log_in_prosess_show_img_path(:id=>@user.id), :size => "100x100") %><br></p>
+					<p>
+						<strong>名前:</strong>
+						<%=@user.name%>
+					</p>
+					<p class="intro">
+						<strong>自己紹介:</strong>
+						<%=@user.introduction%>	
+					</p>
 
-<h3>自己紹介:</h3><%=@user.introduction%><br>
+					<p><strong>お気に入り:</strong></p>
 
-<h5><%=link_to "#{@follow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%> | 
-<%=link_to "#{@follower.size}follower", :controller => "after_log_in_prosess", :action => "watch_follower", :id => current_user.id%></h5>
+					<p><a href="#">#〇〇</a>, <a href="#">#〇〇</a></p>
 
-<h5><%=@shout.size%>shout</h5>
-
-<h5><%=link_to "プロフィールの設定", :controller => "after_log_in_prosess", :action => "update_my_info", :id => current_user.id%></h5>
-<%@shout.each do |shout|%>
-  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-  	<h2><%= link_to "#{shout.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout.article.id %>にてShout!</h2><br>
-  	<%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
-    <%=find_user_name shout[:user_id]%></p>
-    <% if !shout[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout[:emotion_no]))%><% end %>&emsp;<%= shout[:shout]%><br>
-    
-  </div>
-<%end%>
-<%=link_to "戻る", :action => "menu"%>
+					<p><%=link_to "#{@follow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%> | <%=link_to "#{@follower.size}follower", :controller => "after_log_in_prosess", :action => "watch_follower", :id => current_user.id%></p>
+					
+					<p><%=@shout.size%>shout</p>
+					<%=link_to "プロフィールの設定", :controller => "after_log_in_prosess", :action => "update_my_info", :id => current_user.id%>
+				</div><!-- /.box-watch-top -->
+				<%@shout.each do |shout|%>
+					<div class="box-comment">
+						<h3><%= link_to "#{shout.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout.article.id %>にてShout!</h3>
+						<p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %></p>
+	    				<%=find_user_name shout[:user_id]%></p>
+						<p class="cmt-icon"><% if !shout[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout[:emotion_no]))%><% end %>&emsp;<%= shout[:shout]%></p>
+					</div><!-- /.box-comment -->
+				<%end%>
+			</div><!--/.box-item-->
+		</div><!-- /.tab-content -->
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
+<div class="footer">
+	&copy;2017 by Shout.
+</div>
