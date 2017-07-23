@@ -1,33 +1,40 @@
-<h5><%=flash[:update_shut_result]%></h5>
-<h5><%=flash[:destroy_shout_result]%></h5>
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		<div class="tab-content current">
+			<div class="box-item box-watch">
+			<%@shout.each do |shout_list|%>
+				<div class="box-comment">
+					    <h3><%= link_to "#{shout_list.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout_list.article.id %>にてShout!</h3>
+					    <p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %></p>
+						<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout_list.user_id}"%><br><br>
+						    
+						<p class="cmt-icon">
+							<%if !shout_list[:emotion_no].nil? %>
+								<%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%>
+							<% end %>
+							&emsp;<%= shout_list[:shout] %></p>
 
-<%@shout.each do |shout_list|%>
-  <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-    <br>
-    <h2><%= link_to "#{shout_list.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout_list.article.id %>にてShout!</h2><br>
-    <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %><br>
-	<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout_list.user_id}"%><br><br>
-	    
-	<%if !shout_list[:emotion_no].nil? %><%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%><% end %>&emsp;<%= shout_list[:shout] %>
+					    <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
 
-    <br><br>
-    <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
-    <br><br>
-
-    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
-      <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
-    <%else%>
-      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
-    <%end%>
-    
-    <%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイネ
-    <br>
-    <%if current_user.id == shout_list[:user_id]%>
-      <%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
-    <%end%>
-    <br>
-  </div>
-<%end%>
+					    <%if LikeList.find_by(:shout_list_id => shout_list[:id], :user_id => current_user.id)%>
+					      <%=button_to "イイネ済み", "destroy_like_list/#{current_user.id}/#{shout_list[:id]}"%> 
+					    <%else%>
+					      <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout_list[:id]}"%>
+					    <%end%>
+					    
+					    <%=LikeList.where(:shout_list_id => shout_list[:id]).size%>イイネ
+					    <br>
+					    <%if current_user.id == shout_list[:user_id]%>
+					      <%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
+					    <%end%>
+					</div>
+				<%end%>
+			</div><!--/.box-item-->
+		</div><!-- /.tab-content -->
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
+	
 <div class="footer">
 	&copy;2017 by Shout.
 </div>
