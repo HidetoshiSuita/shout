@@ -3,8 +3,9 @@
 		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
 		<div class="tab-content current">
 			<div class="box-item box-watch">
-			<%@shout.each do |shout_list|%>
-				<div class="box-comment">
+				
+					<%@shout.each do |shout_list|%>
+					<div class="box-comment">
 					    <h3><%= link_to "#{shout_list.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout_list.article.id %>にてShout!</h3>
 					    <p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout_list[:user_id]), :size => "100x100") %></p>
 						<%= link_to "#{find_user_name(shout_list[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout_list.user_id}"%><br><br>
@@ -13,7 +14,8 @@
 							<%if !shout_list[:emotion_no].nil? %>
 								<%= image_tag(after_log_in_prosess_icon_path(:id=>shout_list[:emotion_no]))%>
 							<% end %>
-							&emsp;<%= shout_list[:shout] %></p>
+							&emsp;<%= shout_list[:shout] %>
+						</p>
 
 					    <%=link_to "返信する" ,"resp_shout/#{shout_list[:id]}"%>
 
@@ -28,8 +30,9 @@
 					    <%if current_user.id == shout_list[:user_id]%>
 					      <%=link_to '編集・削除',:controller => 'after_log_in_prosess', :action => 'remake_shout', :id => shout_list[:id]%>
 					    <%end%>
-					</div>
-				<%end%>
+					    </div>
+					<%end%>
+				
 			</div><!--/.box-item-->
 		</div><!-- /.tab-content -->
 	</div><!-- /.container -->
@@ -38,18 +41,3 @@
 <div class="footer">
 	&copy;2017 by Shout.
 </div>
-
-<script>
-$(function () {
-    $('.shout_list_button').prevAll().hide();
-    $('.shout_list_button').click(function () {
-        if ($(this).prevAll().is(':hidden')) {
-            $(this).prevAll().slideDown();
-            $(this).text('閉じる').addClass('close');
-        } else {
-            $(this).prevAll().slideUp();
-            $(this).text('返信を見る').removeClass('close');
-        }
-    });
-});
-</script>

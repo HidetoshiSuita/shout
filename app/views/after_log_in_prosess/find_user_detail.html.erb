@@ -1,31 +1,48 @@
-<%= image_tag(after_log_in_prosess_show_img_path(:id=>@user_info.id), :size => "100x100") %><br>
-<%=@user_info[:name]%>
-<h5>Shout:<%=@user_shout.size%>回</h5>
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		
+		<div class="tab-content current">
+			<div class="box-item box-watch">
+				<div class="box-watch-top">
+					<p class="box-watch-img"><%= image_tag(after_log_in_prosess_show_img_path(:id=>@user_info.id), :size => "100x100") %></p>
 
-<h5><%=link_to "#{@folow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%></h5>
+					<p>
+						<strong>名前:</strong>
+						<%=@user_info[:name]%>
+					</p>
 
-<h5><%=link_to "#{@follower.size}follower", :controller => "after_log_in_prosess", :action => "watch_follower", :id => current_user.id%></h5>
-<%if @follow_info_result !=nil%>
-  <%=button_to 'フォロー解除', "delete_follow_list/#{@follow_info_result[:id]}"%><br>
-<%elsif current_user.id !=@user_info[:id]%>
-  <%=link_to "フォローする", "follow_user/#{current_user.id}/#{@user_info[:id]}"%><br>
-<%else%>
-<%end%>
+					<p>Shout:<%=@user_shout.size%>回</p>
 
-<%if @user_shout.size %>
-  <% @user_shout.each do |shout| %>
-    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-      <h2><%= link_to "#{shout.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout.article.id %>にてShout!</h2><br>
-	  <%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %><br>
-      <%= link_to "#{find_user_name(shout[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout.user_id}"%><br><br><br>
-      <%= shout[:shout]%><br><br>
-      <%=link_to "返信する" ,:controller => 'after_log_in_prosess', :action => 'resp_shout', :id => shout[:id]%><br><br>
-      <%=LikeList.where(:shout_list_id => shout[:id]).size%>イイネ<br><br>
-      <%if LikeList.find_by(:shout_list_id => shout[:id], :user_id => current_user.id)%>
-        <%=button_to "イイネ解除", "destroy_like_list/#{current_user.id}/#{shout[:id]}"%>
-      <%else%>
-        <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout[:id]}"%>
-      <%end%>
-    </div>
-  <%end%>
-<%end%>
+					<p><%=link_to "#{@folow.size}follow", :controller => "after_log_in_prosess", :action => "watch_follow_user", :id => current_user.id%> | <%=link_to "#{@follower.size}follower", :controller => "after_log_in_prosess", :action => "watch_follower", :id => current_user.id%></p>
+
+					<%if @follow_info_result !=nil%>
+					  <%=button_to 'フォロー解除', "delete_follow_list/#{@follow_info_result[:id]}", :class=>"btn-cts" %><br>
+					<%elsif current_user.id !=@user_info[:id]%>
+					  <%=link_to "フォローする", "follow_user/#{current_user.id}/#{@user_info[:id]}", :class=>"btn-cts" %><br>
+					<%end%>
+
+					<%if @user_shout.size %>
+					  <% @user_shout.each do |shout| %>
+					    <div class="box-comment">
+					      <h3><%= link_to "#{shout.article.title}", :controller => "after_log_in_prosess", :action => "article_detail", :id => shout.article.id %>にてShout!</h3>
+						  <p><%= image_tag(after_log_in_prosess_show_img_path(:id=>shout[:user_id]), :size => "100x100") %></p>
+					      <p><%= link_to "#{find_user_name(shout[:user_id])}" ,"/after_log_in_prosess/find_user_detail/#{shout.user_id}"%></p>
+					      <p><%= shout[:shout]%></p>
+					      <p><%=link_to "返信する" ,:controller => 'after_log_in_prosess', :action => 'resp_shout', :id => shout[:id]%></p>
+					      <p><%=LikeList.where(:shout_list_id => shout[:id]).size%>イイネ</p>
+					      <%if LikeList.find_by(:shout_list_id => shout[:id], :user_id => current_user.id)%>
+					        <%=button_to "イイネ解除", "destroy_like_list/#{current_user.id}/#{shout[:id]}"%>
+					      <%else%>
+					        <%=button_to "イイネ", "make_like/#{current_user.id}/#{shout[:id]}"%>
+					      <%end%>
+					    </div>
+					  <%end%>
+					<%end%>
+			</div><!--/.box-item-->
+		</div><!-- /.tab-content -->
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
+<div class="footer">
+	&copy;2017 by Shout.
+</div>
