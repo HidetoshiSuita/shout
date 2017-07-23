@@ -1,41 +1,45 @@
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+			<ul class="tabs">
+				<li class="tab-link current" data-tab="tab-1"><%= link_to "新着順", :controller => "after_log_in_prosess", :action => "menu" %></li>
+				<li class="tab-link" data-tab="tab-2"><%= link_to "人気順", :controller => "after_log_in_prosess", :action => "favorite" %></li>
+				<li class="tab-link" data-tab="tab-3"><%= link_to "自分用", :controller => "after_log_in_prosess", :action => "my_genre" %></li>
+			</ul>
 
-<!--header_link-->
-<table>
-	<td><h1><%= link_to "新着順", :controller => "after_log_in_prosess", :action => "menu" %></h1></td> 
-	<td><h1><%= link_to "人気順", :controller => "after_log_in_prosess", :action => "favorite" %></h1></td>
-	<td><h1><%= link_to "自分用", :controller => "after_log_in_prosess", :action => "my_genre" %></h1></td>
-</table>
-<!--genre_link-->
-<table>
-	<% @genre.each do |g| %>
-		<td><%= link_to "#{g.name}", :controller => "after_log_in_prosess", :action => "menu", genre_id: g.id %></td>
-	<% end %>
-</table>
-<br>
-<!--new contents-->
-<div class="content">
-	<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'new_article_action'} do |f| %>
-	  <%=f.label "タイトル"%>
-	  <%= f.text_field :title, :size=>"80" %>
-	  <br><br>
-	  <%=f.label "埋め込みタグ"%>
-	  <%= f.text_field :tag, :size=>"80" %>
-	  <br><br>
-	  <%=f.label "ジャンル"%>
-	  <%= f.collection_select :genre_id, Genre.all, :id, :name, :selected => @genre_id  %>
-	  <br><br>
-	  <%=f.label "コメント"%>
-	  <%= f.text_area :comment, :size=>"80x20" %>
-	  <br><br>
-	  <%=f.label "画像"%>
-	  <%= f.file_field  :img %>
-	  <br><br>
-	  <%= f.hidden_field :user_id, :value => current_user.id %>
-	  <%=f.submit "新規作成"%>
-	<%end%>
-	<br><br>
-	<div class="new_article_button">話題作成</div>
-</div>
-
-<br>
-<%= render 'article_and_shout' %>
+			<div class="nav-tab">
+				<ul>
+					<% @genre.each do |g| %>
+						<li><%= link_to "#{g.name}", :controller => "after_log_in_prosess", :action => "menu", genre_id: g.id %></li>
+					<% end %>
+				</ul>
+			</div>
+				<!--new contents-->
+				<div class="frm-contact">
+					<%= form_for @article_info, :url => {:controller => 'after_log_in_prosess', :action => 'new_article_action'} do |f| %>
+					  <div class="form-group">
+					  <%=f.label "タイトル"%>
+					  <%= f.text_field :title, :size=>"80" %>
+					  </div>
+					  <div class="form-group">
+					  <%=f.label "埋め込みタグ"%>
+					  <%= f.text_field :tag, :size=>"80" %>
+					  </div>
+					  <div class="form-group">
+					  <%=f.label "ジャンル"%>
+					  <%= f.collection_select :genre_id, Genre.all, :id, :name, :selected => @genre_id  %>
+					  </div>
+					  <div class="form-group">
+					  <%=f.label "コメント"%>
+					  <%= f.text_area :comment, :size=>"80x20" %>
+					  </div>
+					  <div class="form-group">
+					  <%=f.label "画像"%>
+					  <%= f.file_field  :img %>
+					  </div>
+					  <%= f.hidden_field :user_id, :value => current_user.id %>
+					  <%=f.submit "新規作成",:class=>"btn-cts btn-submit"%>
+					<%end%>
+					<span class="btn-toggle btn-ct new_article_button">話題作成/閉じる</span>
+				</div>
+				<%= render 'article_and_shout' %>

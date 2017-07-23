@@ -1,10 +1,20 @@
-
-<%@users.each do |user_hash|%>
-<br><br>
-  <%= link_to user_hash[:name], "find_user_detail/#{user_hash[:id]}" %><br>
-  <%= image_tag(after_log_in_prosess_show_img_path(:id=>user_hash.id), :size => "100x100") %><br>
-  <h3>自己紹介:</h3><%=user_hash.introduction%><br><br>
-<%end%>
-
-<%=link_to "戻る", :action => "find_user"%>
-
+<div id="main-area">
+	<div class="container">
+		<h1 class="logo"><%= link_to image_tag('logo.png',{:border => '0'}), after_log_in_prosess_menu_path %><br></h1>
+		
+		<div class="tab-content current">
+			<div class="box-item box-watch">
+				<div class="box-watch-top">
+					<%@users.each do |user_hash|%>
+	 					<p><%= link_to user_hash[:name], "find_user_detail/#{user_hash[:id]}" %></p>
+	  					<p class="box-watch-img"><%= image_tag(after_log_in_prosess_show_img_path(:id=>user_hash.id), :size => "100x100") %></p>
+						<p class="intro"><strong><h3>自己紹介:</h3><%=user_hash.introduction%></strong></p>
+					<%end%>
+				</div><!-- /.box-watch-top -->
+			</div><!--/.box-item-->
+		</div><!-- /.tab-content -->
+	</div><!-- /.container -->
+</div><!-- /.main-area -->
+<div class="footer">
+	&copy;2017 by Shout.
+</div>
