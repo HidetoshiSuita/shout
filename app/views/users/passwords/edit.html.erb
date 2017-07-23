@@ -9,10 +9,6 @@
   				
 				<div class="form-group">
 					<%= f.label :password, "↓新しいパスワードを入力して下さい↓（6文字以上）" %><br />
-					<input type="password" name="" id="pass" placeholder="パスワード">
-				    <% if @minimum_password_length %>
-				      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
-				    <% end %>
 				    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
 				</div><!-- /.form-group -->
 				<div class="form-group">
@@ -29,4 +25,3 @@
 		</div><!-- /.login-form -->	
 	</div><!-- /.container -->
 </div><!-- /.main-area -->
-<%= render "users/shared/links" %>
